@@ -20,17 +20,24 @@ namespace NewsNow.Controllers
         // 
         // GET: /Example/
 
-        public string Index()
+        public IActionResult Index()
         {
-            return "This is my default action...";
+            return View();
         }
+
+        [HttpPost]
+        public IActionResult Index(ExampleStatisticsModel model)
+        {
+            return RedirectToAction("AddEntersAmount", "Example", new { amount = model.EntersAmount });
+        }
+
 
         public async Task<IActionResult> AddEntersAmount(int amount = 1)
         {
             var statistics = await _context.ExampleStatistics.FirstOrDefaultAsync(m => m.ID == 1);
             if (statistics == null)
             {
-                ExampleStatistics exampleStatistics = new ExampleStatistics();
+                ExampleStatisticsModel exampleStatistics = new ExampleStatisticsModel();
                 exampleStatistics.ID = 1;
                 exampleStatistics.EntersAmount = amount;
                 exampleStatistics.OldestManName = "Isaac Garzoon";

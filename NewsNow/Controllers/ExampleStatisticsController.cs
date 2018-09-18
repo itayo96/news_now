@@ -9,11 +9,11 @@ using NewsNow.Models;
 
 namespace NewsNow.Controllers
 {
-    public class StatisticsController : Controller
+    public class ExampleStatisticsController : Controller
     {
         private readonly NewsNowContext _context;
 
-        public StatisticsController(NewsNowContext context)
+        public ExampleStatisticsController(NewsNowContext context)
         {
             _context = context;
         }
@@ -53,7 +53,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,EntersAmount,OldestManName")] ExampleStatistics statistics)
+        public async Task<IActionResult> Create([Bind("ID,EntersAmount,OldestManName")] ExampleStatisticsModel statistics)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,EntersAmount,OldestManName")] ExampleStatistics statistics)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,EntersAmount,OldestManName")] ExampleStatisticsModel statistics)
         {
             if (id != statistics.ID)
             {

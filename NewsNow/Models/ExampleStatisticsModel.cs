@@ -2,7 +2,7 @@
 
 namespace NewsNow.Models
 {
-    public class ExampleStatistics
+    public class ExampleStatisticsModel
     {
         public int ID { get; set; }
         public int EntersAmount { get; set; }

@@ -13,6 +13,6 @@ namespace NewsNow.Models
         {
         }
 
-        public DbSet<NewsNow.Models.ExampleStatistics> ExampleStatistics { get; set; }
+        public DbSet<NewsNow.Models.ExampleStatisticsModel> ExampleStatistics { get; set; }
     }
 }
