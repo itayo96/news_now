@@ -1,0 +1,29 @@
+﻿@model IEnumerable<NewsNow.Models.ArticleModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="row mb-2">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="cuadro_intro_hover " style="background-color:#cccccc;">
+                <p style="text-align:center; margin-top:20px;">
+                    <img src="@Html.DisplayFor(modelItem => item.HomeImage)" class="img-responsive" alt="Image not found" onerror="this.src='http://placehold.it/500x330';" />
+                </p>
+                <div class="caption">
+                    <div class="blur"></div>
+                    <div class="caption-text">
+                        <h3 style="padding:10px;">@Html.DisplayFor(modelItem => item.HomeHeader)</h3>
+                        <p>@Html.DisplayFor(modelItem => item.HomeContent)</p>
+                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-default">Read more...</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

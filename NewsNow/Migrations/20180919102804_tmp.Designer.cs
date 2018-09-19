@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsNow.Models;
 
 namespace NewsNow.Migrations
 {
     [DbContext(typeof(NewsNowContext))]
-    partial class NewsNowContextModelSnapshot : ModelSnapshot
+    [Migration("20180919102804_tmp")]
+    partial class tmp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -18,21 +20,13 @@ namespace NewsNow.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("NewsNow.Models.ArticleModel", b =>
+            modelBuilder.Entity("NewsNow.Models.Article", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DetailedContent");
-
-                    b.Property<string>("DetailedHeader");
-
-                    b.Property<string>("HomeContent");
-
-                    b.Property<string>("HomeHeader");
-
-                    b.Property<string>("HomeImage");
+                    b.Property<string>("Header");
 
                     b.HasKey("ID");
 
