@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsNow.Models;
 
 namespace NewsNow.Migrations
 {
     [DbContext(typeof(NewsNowContext))]
-    partial class NewsNowContextModelSnapshot : ModelSnapshot
+    [Migration("20180919180419_Initiat-Data11")]
+    partial class InitiatData11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,15 +48,15 @@ namespace NewsNow.Migrations
                     b.ToTable("Articles");
 
                     b.HasData(
-                        new { ArticleId = 1, CategoryId = 1, DateCreated = new DateTime(2018, 9, 19, 21, 18, 57, 879, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Targets in Syria: Bombs", HomeImage = "https://i.ytimg.com/vi/R_iYQlMw0r0/maxresdefault.jpg" },
-                        new { ArticleId = 2, CategoryId = 1, DateCreated = new DateTime(2018, 9, 19, 21, 18, 57, 880, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "\"West side is a prison\"", HomeImage = "http://www.bworldonline.com/wp-content/uploads/2018/02/Megaworld-Westside-City.jpg" },
-                        new { ArticleId = 3, CategoryId = 1, DateCreated = new DateTime(2018, 9, 19, 21, 18, 57, 880, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "The Israeli startups in space", HomeImage = "https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/hires/2017/whatisspacet.jpg" },
-                        new { ArticleId = 4, CategoryId = 2, DateCreated = new DateTime(2018, 9, 19, 21, 18, 57, 880, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "1:0 on Raanana vs Kaka", HomeImage = "https://sportshub.cbsistatic.com/i/r/2018/07/15/31f520b7-cad4-48f7-8509-485d51cfb90a/thumbnail/370x208/26c493f4ffe1ad85aea04580c4eb45bb/lionel-messi-argentina.jpg" },
-                        new { ArticleId = 5, CategoryId = 2, DateCreated = new DateTime(2018, 9, 19, 21, 18, 57, 880, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Dummy article" },
-                        new { ArticleId = 6, CategoryId = 2, DateCreated = new DateTime(2018, 9, 19, 21, 18, 57, 880, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Dummy article" },
-                        new { ArticleId = 7, CategoryId = 3, DateCreated = new DateTime(2018, 9, 19, 21, 18, 57, 880, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Dummy article" },
-                        new { ArticleId = 8, CategoryId = 3, DateCreated = new DateTime(2018, 9, 19, 21, 18, 57, 880, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Dummy article" },
-                        new { ArticleId = 9, CategoryId = 3, DateCreated = new DateTime(2018, 9, 19, 21, 18, 57, 880, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Dummy article" }
+                        new { ArticleId = 1, CategoryId = 1, DateCreated = new DateTime(2018, 9, 19, 21, 4, 19, 254, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Targets in Syria: Bombs" },
+                        new { ArticleId = 2, CategoryId = 1, DateCreated = new DateTime(2018, 9, 19, 21, 4, 19, 256, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "\"West side is a prison\"" },
+                        new { ArticleId = 3, CategoryId = 1, DateCreated = new DateTime(2018, 9, 19, 21, 4, 19, 256, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "The Israeli startups in space" },
+                        new { ArticleId = 4, CategoryId = 2, DateCreated = new DateTime(2018, 9, 19, 21, 4, 19, 256, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "1:0 on Raanana vs Kaka" },
+                        new { ArticleId = 5, CategoryId = 2, DateCreated = new DateTime(2018, 9, 19, 21, 4, 19, 256, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Dummy article" },
+                        new { ArticleId = 6, CategoryId = 2, DateCreated = new DateTime(2018, 9, 19, 21, 4, 19, 256, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Dummy article" },
+                        new { ArticleId = 7, CategoryId = 3, DateCreated = new DateTime(2018, 9, 19, 21, 4, 19, 256, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Dummy article" },
+                        new { ArticleId = 8, CategoryId = 3, DateCreated = new DateTime(2018, 9, 19, 21, 4, 19, 256, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Dummy article" },
+                        new { ArticleId = 9, CategoryId = 3, DateCreated = new DateTime(2018, 9, 19, 21, 4, 19, 256, DateTimeKind.Local), HomeContent = "This is the description of an article. Read more.", HomeHeader = "Dummy article" }
                     );
                 });
 

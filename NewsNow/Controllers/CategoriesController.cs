@@ -9,27 +9,22 @@ using NewsNow.Models;
 
 namespace NewsNow.Controllers
 {
-    public class ArticlesController : Controller
+    public class CategoriesController : Controller
     {
         private readonly NewsNowContext _context;
 
-        public ArticlesController(NewsNowContext context)
+        public CategoriesController(NewsNowContext context)
         {
             _context = context;
         }
 
-        // GET: Articles
+        // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Articles.ToListAsync());
+            return View(await _context.Categories.ToListAsync());
         }
 
-        public async Task<IActionResult> Browse()
-        {
-            return View(await _context.Articles.ToListAsync());
-        }
-
-        // GET: Articles/Details/5
+        // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,39 +32,39 @@ namespace NewsNow.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Articles
-                .FirstOrDefaultAsync(m => m.ArticleId == id);
-            if (article == null)
+            var categoryModel = await _context.Categories
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (categoryModel == null)
             {
                 return NotFound();
             }
 
-            return View(article);
+            return View(categoryModel);
         }
 
-        // GET: Articles/Create
+        // GET: Categories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Articles/Create
+        // POST: Categories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,HomeHeader")] Article article)
+        public async Task<IActionResult> Create([Bind("ID,Name")] Category categoryModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(article);
+                _context.Add(categoryModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(article);
+            return View(categoryModel);
         }
 
-        // GET: Articles/Edit/5
+        // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +72,22 @@ namespace NewsNow.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Articles.FindAsync(id);
-            if (article == null)
+            var categoryModel = await _context.Categories.FindAsync(id);
+            if (categoryModel == null)
             {
                 return NotFound();
             }
-            return View(article);
+            return View(categoryModel);
         }
 
-        // POST: Articles/Edit/5
+        // POST: Categories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,HomeHeader,HomeContent,HomeImage")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Category categoryModel)
         {
-            if (id != article.ArticleId)
+            if (id != categoryModel.CategoryId)
             {
                 return NotFound();
             }
@@ -101,12 +96,12 @@ namespace NewsNow.Controllers
             {
                 try
                 {
-                    _context.Update(article);
+                    _context.Update(categoryModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ArticleExists(article.ArticleId))
+                    if (!CategoryModelExists(categoryModel.CategoryId))
                     {
                         return NotFound();
                     }
@@ -117,10 +112,10 @@ namespace NewsNow.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(article);
+            return View(categoryModel);
         }
 
-        // GET: Articles/Delete/5
+        // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,30 +123,30 @@ namespace NewsNow.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Articles
-                .FirstOrDefaultAsync(m => m.ArticleId == id);
-            if (article == null)
+            var categoryModel = await _context.Categories
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (categoryModel == null)
             {
                 return NotFound();
             }
 
-            return View(article);
+            return View(categoryModel);
         }
 
-        // POST: Articles/Delete/5
+        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var article = await _context.Articles.FindAsync(id);
-            _context.Articles.Remove(article);
+            var categoryModel = await _context.Categories.FindAsync(id);
+            _context.Categories.Remove(categoryModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ArticleExists(int id)
+        private bool CategoryModelExists(int id)
         {
-            return _context.Articles.Any(e => e.ArticleId == id);
+            return _context.Categories.Any(e => e.CategoryId == id);
         }
     }
 }

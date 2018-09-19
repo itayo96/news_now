@@ -1,43 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using NewsNow.Models;
 
 namespace NewsNow.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly NewsNowContext _context;
+
+        public HomeController(NewsNowContext context)
         {
-            return View();
+            _context = context;
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> Index()
         {
-            ViewData["Message"] = "Your application description page.";
+            Dictionary<Category, List<Article>> categories = new Dictionary<Category, List<Article>>();
+
+            foreach (Category c in _context.Categories)
+            {
+                categories.Add(c, await _context.Entry(c).Collection(p => p.Articles).Query().Take(5).ToListAsync());
+            }
+
+            /*foreach (Article m in _context.Articles)
+            {
+                _context.Entry(m).Reference(p => p.Category).Load();
+                var x = m.Category.Name;
+            }*/
+
+            ViewData["Categories"] = categories;
+
+            ViewData["Articles"] = await _context.Articles.ToListAsync();
 
             return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
