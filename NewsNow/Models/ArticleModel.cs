@@ -2,9 +2,11 @@
 
 namespace NewsNow.Models
 {
-    public class ArticleModel
+    public class Article
     {
-        public int ID { get; set; }
+        public int ArticleId { get; set; }
+
+        public DateTime? DateCreated { get; set; }
 
         // Detailed page
 
@@ -19,5 +21,8 @@ namespace NewsNow.Models
         public string HomeContent { get; set; }
 
         public string HomeImage { get; set; }
+
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

@@ -9,8 +9,8 @@ using NewsNow.Models;
 namespace NewsNow.Migrations
 {
     [DbContext(typeof(NewsNowContext))]
-    [Migration("20180919130053_Added home image")]
-    partial class Addedhomeimage
+    [Migration("20180919162919_Initiat-Data2")]
+    partial class InitiatData2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,6 +26,8 @@ namespace NewsNow.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CategoryID");
+
                     b.Property<string>("DetailedContent");
 
                     b.Property<string>("DetailedHeader");
@@ -38,7 +40,30 @@ namespace NewsNow.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Article");
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("Articles");
+
+                    b.HasData(
+                        new { ID = 1, CategoryID = 1, HomeContent = "A text describing this article", HomeHeader = "Watch: Attack in Syria" }
+                    );
+                });
+
+            modelBuilder.Entity("NewsNow.Models.CategoryModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new { ID = 1, Name = "Politics" }
+                    );
                 });
 
             modelBuilder.Entity("NewsNow.Models.ExampleStatisticsModel", b =>
@@ -54,6 +79,14 @@ namespace NewsNow.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("ExampleStatistics");
+                });
+
+            modelBuilder.Entity("NewsNow.Models.ArticleModel", b =>
+                {
+                    b.HasOne("NewsNow.Models.CategoryModel", "Category")
+                        .WithMany("Articles")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

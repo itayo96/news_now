@@ -9,8 +9,8 @@ using NewsNow.Models;
 namespace NewsNow.Migrations
 {
     [DbContext(typeof(NewsNowContext))]
-    [Migration("20180919125543_Renamed Article")]
-    partial class RenamedArticle
+    [Migration("20180919165118_Initiat-Data5")]
+    partial class InitiatData5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,17 +26,45 @@ namespace NewsNow.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CategoryId");
+
+                    b.Property<string>("DetailedContent");
+
+                    b.Property<string>("DetailedHeader");
+
                     b.Property<string>("HomeContent");
 
                     b.Property<string>("HomeHeader");
 
-                    b.Property<string>("PageContent");
-
-                    b.Property<string>("PageHeader");
+                    b.Property<string>("HomeImage");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Article");
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Articles");
+
+                    b.HasData(
+                        new { ID = 1, CategoryId = 1, HomeContent = "A text describing this article", HomeHeader = "Watch: Attack in Syria" },
+                        new { ID = 2, CategoryId = 1, HomeContent = "A text describing this article", HomeHeader = "blah blah" }
+                    );
+                });
+
+            modelBuilder.Entity("NewsNow.Models.CategoryModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new { ID = 1, Name = "Politics" }
+                    );
                 });
 
             modelBuilder.Entity("NewsNow.Models.ExampleStatisticsModel", b =>
@@ -52,6 +80,14 @@ namespace NewsNow.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("ExampleStatistics");
+                });
+
+            modelBuilder.Entity("NewsNow.Models.ArticleModel", b =>
+                {
+                    b.HasOne("NewsNow.Models.CategoryModel", "Category")
+                        .WithMany("Articles")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

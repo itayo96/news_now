@@ -2,7 +2,7 @@
 
 namespace NewsNow.Migrations
 {
-    public partial class RenamedArticle : Migration
+    public partial class InitiatData3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

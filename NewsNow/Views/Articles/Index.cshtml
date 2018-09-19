@@ -1,29 +1,41 @@
-﻿@model IEnumerable<NewsNow.Models.ArticleModel>
+﻿@model IEnumerable<NewsNow.Models.Article>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Browse";
 }
+
+<h2>Browse all articles</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<div class="row mb-2">
-    @foreach (var item in Model)
-    {
-        <div class="col-md-3">
-            <div class="cuadro_intro_hover " style="background-color:#cccccc;">
-                <p style="text-align:center; margin-top:20px;">
-                    <img src="@Html.DisplayFor(modelItem => item.HomeImage)" class="img-responsive" alt="Image not found" onerror="this.src='http://placehold.it/500x330';" />
-                </p>
-                <div class="caption">
-                    <div class="blur"></div>
-                    <div class="caption-text">
-                        <h3 style="padding:10px;">@Html.DisplayFor(modelItem => item.HomeHeader)</h3>
-                        <p>@Html.DisplayFor(modelItem => item.HomeContent)</p>
-                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-default">Read more...</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HomeHeader)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleId)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HomeHeader)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArticleId)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ArticleId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ArticleId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ArticleId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
