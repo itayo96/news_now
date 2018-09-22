@@ -90,7 +90,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,HomeHeader,HomeContent,HomeImage")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,HomeHeader,HomeContent,HomeImage,DetailedContent")] Article article)
         {
             if (id != article.ArticleId)
             {
@@ -101,7 +101,13 @@ namespace NewsNow.Controllers
             {
                 try
                 {
-                    _context.Update(article);
+                    _context.Articles.Attach(article);
+                    _context.Entry(article).Property(x => x.DetailedContent).IsModified = true;
+                    _context.Entry(article).Property(x => x.HomeHeader).IsModified = true;
+                    _context.Entry(article).Property(x => x.HomeContent).IsModified = true;
+                    _context.Entry(article).Property(x => x.HomeImage).IsModified = true;
+
+                    //_context.Update(article);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
