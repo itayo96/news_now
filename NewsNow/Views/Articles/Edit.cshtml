@@ -7,6 +7,11 @@
 <h2>Edit</h2>
 
 <h4>Article</h4>
+
+<div>
+
+</div>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -39,3 +44,14 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<textarea id="MDEditorTextArea"></textarea>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var simplemde = new SimpleMDE({ element: $("#MDEditorTextArea")[0] });
+            simplemde.value("This text will appear in the editor");
+        })
+    </script>
+}

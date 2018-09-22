@@ -29,7 +29,7 @@
                             <div class="caption-text">
                                 <h3 style="padding:10px;">@Html.DisplayFor(modelItem => article.HomeHeader)</h3>
                                 <p>@Html.DisplayFor(modelItem => article.HomeContent)</p>
-                                <a asp-action="Details" asp-route-id="@article.ArticleId" class="btn btn-default">Read more...</a>
+                                <a asp-controller="Articles" asp-action="Details" asp-route-id="@article.ArticleId" class="btn btn-default">Read more...</a>
                             </div>
                         </div>
                     </div>
