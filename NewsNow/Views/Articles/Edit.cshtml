@@ -14,8 +14,8 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <form asp-action="Edit">
+        <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ArticleId" />
             <div class="form-group">
@@ -33,25 +33,40 @@
                 <input asp-for="HomeImage" class="form-control" />
                 <span asp-validation-for="HomeImage" class="text-danger"></span>
             </div>
+            
+        </div>
+        <div class="col-md-12">
+            <div class=" form-group">
+                <label asp-for="DetailedContent" class="control-label"></label>
+                <textarea asp-for="DetailedContent" id="MDEditorTextArea"></textarea>
+                <span asp-validation-for="DetailedContent" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
-<textarea id="MDEditorTextArea"></textarea>
-
 @section Scripts
 {
     <script type="text/javascript">
         $(document).ready(function () {
             var simplemde = new SimpleMDE({ element: $("#MDEditorTextArea")[0] });
-            simplemde.value("This text will appear in the editor");
+            var str = decodeHtml("@Model.DetailedContent")
+            simplemde.value(str);
         })
+
+        function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+        }
     </script>
 }

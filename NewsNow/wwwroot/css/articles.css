@@ -3,7 +3,8 @@
     padding: 0px;
     position: relative;
     overflow: hidden;
-    height: 200px;
+    height: 400px;
+    object-fit: fill;
 }
 
 .cuadro_intro_hover:hover .caption {
@@ -15,13 +16,16 @@
     -o-transform: translateY(-150px);
 }
 
-.cuadro_intro_hover img {
-    z-index: 4;
-}
+    .cuadro_intro_hover .image_wrapper {
+        text-align: center;
+        z-index: 4;
+        object-fit: fill;
+    }
+
 
 .cuadro_intro_hover .caption {
     position: absolute;
-    top: 150px;
+    top: 300px;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -42,15 +46,20 @@
     z-index: 10;
     color: #fff;
     position: absolute;
-    height: 300px;
+    height: 500px;
     text-align: center;
     top: -20px;
     width: 100%;
 }
 
+.cuadro_intro_hover .caption-text-header {
+    padding: 10px;
+    height: 100px;
+}
+
 .category {
     background-color: #eeeeee;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
     margin-top: 2vh;
     padding-bottom: 1vh;
 }

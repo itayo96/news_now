@@ -20,14 +20,17 @@
             @foreach (var article in c.Value)
             {
                 <div class="col-md-4">
-                    <div class="cuadro_intro_hover " style="background-color:#cccccc;">
-                        <p style="text-align:center; margin-top:20px;">
-                            <img src="@Html.DisplayFor(modelItem => article.HomeImage)" class="img-responsive" alt="Image not found" onerror="this.src='http://placehold.it/500x330';" />
-                        </p>
+                    <div class="cuadro_intro_hover" style="background-color:#cccccc;">
+                        <div class="image_wrapper">
+                            <img src="@Html.DisplayFor(modelItem => article.HomeImage)" 
+                                 
+                                 alt="Image not found" 
+                                 onerror="this.src='http://placehold.it/500x330';"/>
+                        </div>
                         <div class="caption">
                             <div class="blur"></div>
                             <div class="caption-text">
-                                <h3 style="padding:10px;">@Html.DisplayFor(modelItem => article.HomeHeader)</h3>
+                                <h3 class="caption-text-header">@Html.DisplayFor(modelItem => article.HomeHeader)</h3>
                                 <p>@Html.DisplayFor(modelItem => article.HomeContent)</p>
                                 <a asp-controller="Articles" asp-action="Details" asp-route-id="@article.ArticleId" class="btn btn-default">Read more...</a>
                             </div>
