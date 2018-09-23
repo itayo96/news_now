@@ -1,10 +1,1 @@
-﻿@model NewsNow.Models.Article
-
-<div class="media">
-    <img class="mr-3" src="@Html.DisplayFor(model => model.HomeImage)" style="width: 150px; max-height:100px;">
-    <div class="media-body">
-        <h5 class="card-title">@Html.DisplayFor(model => model.HomeHeader)</h5>
-        <p class="card-text">@Html.DisplayFor(model => model.HomeContent)</p>
-        <a asp-controller="Articles" asp-action="Details" asp-route-id="@Html.DisplayFor(model => model.ArticleId)">Read more...</a>
-    </div>
-</div>
+﻿

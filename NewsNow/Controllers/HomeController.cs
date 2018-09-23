@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +33,10 @@ namespace NewsNow.Controllers
                 var x = m.Category.Name;
             }*/
 
+            // TODO: Actually calculate the featured articles
             ViewData["Categories"] = categories;
             ViewData["MainArticle"] = await _context.Articles.FindAsync(1);
-            ViewData["Featured"] = await _context.Articles.Take(6).ToListAsync();
+            ViewData["Featured"] = await _context.Articles.Skip(1).Take(2).ToListAsync();
             ViewData["Articles"] = await _context.Articles.ToListAsync();
 
             return View();

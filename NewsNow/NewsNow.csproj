@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\example\" />
     <Folder Include="wwwroot\lib\showdown\dist\" />
   </ItemGroup>
 
