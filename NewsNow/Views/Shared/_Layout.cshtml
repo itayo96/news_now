@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - NewsNow</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" href="~/lib/simplemde/dist/simplemde.min.css" />
         <link rel="stylesheet" href="~/lib/showdown/dist/showdown.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -21,40 +21,56 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"><img src="~/images/NewsNowLogoBlack_300x65.png.png" style="height: 26px;" /></a>
+    <div class="container">
+        <header class="blog-header py-3">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-4 pt-1">
+                    <a class="text-muted" href="#">Subscribe</a>
+                </div>
+                <div class="col-4 text-center">
+                    <a class="blog-header-logo text-dark" href="#"><img src="~/images/NewsNowLogoBlack_300x65.png.png" style="height:20px;" /></a>
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <a class="text-muted" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
+                    </a>
+                    <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+                </div>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Home</a></li>
-                    <li><a href="/Articles/Browse">Browse</a></li>
-                    <li><a href="#contact">Contact</a></li>
+        </header>
+        <!--
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/"><img src="~/images/NewsNowLogoWhite_300x65.png.png" style="height:20px;" /></a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item @((string)ViewData["Tab"] == "Home" ? "active" : "")">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item @((string)ViewData["Tab"] == "Browse" ? "active" : "")">
+                        <a class="nav-link" href="/articles/index">Browse</a>
+                    </li>
                 </ul>
-            </div><!--/.nav-collapse -->
+                <form class="form-inline mt-2 mt-md-0">
+                    @{/* TODO: Connect the search to here */}
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+        -->
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; 2018 - NewsNow</p>
+            </footer>
         </div>
-    </nav>
-
-    <partial name="_CookieConsentPartial" />
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - NewsNow</p>
-        </footer>
     </div>
-
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
         <script src="~/lib/showdown/dist/showdown.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/lib/simplemde/dist/simplemde.min.js"></script>

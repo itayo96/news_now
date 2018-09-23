@@ -26,7 +26,7 @@ namespace NewsNow.Controllers
 
             foreach (Category c in _context.Categories)
             {
-                categories.Add(c, await _context.Entry(c).Collection(p => p.Articles).Query().Take(5).ToListAsync());
+                categories.Add(c, await GetFeatured(c).ToListAsync());
             }
 
             /*foreach (Article m in _context.Articles)
@@ -36,10 +36,16 @@ namespace NewsNow.Controllers
             }*/
 
             ViewData["Categories"] = categories;
-
+            ViewData["MainArticle"] = await _context.Articles.FindAsync(1);
+            ViewData["Featured"] = await _context.Articles.Take(6).ToListAsync();
             ViewData["Articles"] = await _context.Articles.ToListAsync();
 
             return View();
+        }
+
+        public IQueryable<Article> GetFeatured(Category category)
+        {
+            return _context.Entry(category).Collection(p => p.Articles).Query().Take(4);
         }
     }
 }

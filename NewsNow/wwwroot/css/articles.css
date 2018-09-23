@@ -63,3 +63,15 @@
     margin-top: 2vh;
     padding-bottom: 1vh;
 }
+
+.home-main-article {
+    background-color: #Fff5ef;
+}
+
+.home-main-article > div > strong {
+    color: darkred !important;
+}
+
+.home-main-article > div > a {
+    color: darkred !important;
+}
