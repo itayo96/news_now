@@ -6,13 +6,16 @@
 
 
 <div class="page-header">
-    <h1>@Html.DisplayFor(model => model.HomeHeader)</h1>
-</div>
+    <h1>@Html.DisplayFor(model => model.Header)</h1>
+    <p>
+        @Html.DisplayFor(model => model.Summery)
+    </p>
+    <small>@Html.DisplayFor(model=>model.DateCreated)</small>
+    <partial name="_CategoryBadge" model="@Model.Category"/>
 
-<div class="row">
     <div class="btn-group" role="group" aria-label="...">
-        <a asp-action="Edit" asp-route-id="@Model.ArticleId" class="btn btn-default">Edit</a>
-        <a asp-action="Index" class="btn btn-default">Back to List</a>
+        <a asp-action="Edit" asp-route-id="@Model.ArticleId" class="btn btn-sm btn-outline-secondary">Edit</a>
+        <a href="/" class="btn btn-sm btn-outline-secondary">Home</a>
     </div>
     <br />
     <br />
@@ -59,7 +62,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var converter = new showdown.Converter(),
-                text = decodeHtml("@Model.DetailedContent"),
+                text = decodeHtml("@Model.Content"),
                 html = converter.makeHtml(text);
 
             $("#ArticleContent").html(html);
