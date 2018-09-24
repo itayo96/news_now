@@ -22,7 +22,7 @@
         </h3>
         <div class="mb-1 text-muted">@(((Article)ViewData["MainArticle"]).DateCreated)</div>
         <p class="card-text mb-auto">@(((Article)ViewData["MainArticle"]).Summery)</p>
-        <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">Read more...</a>
+        <a class="btn btn-sm btn-outline-secondary" asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">Read more</a>
     </div>
     <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">
         <img class="card-img-right flex-auto d-none d-md-block" style="width: 550px; height: 350px;" src="@(((Article)ViewData["MainArticle"]).HomeImageUrl)" data-holder-rendered="true" />

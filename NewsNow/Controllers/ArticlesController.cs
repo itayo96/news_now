@@ -37,8 +37,9 @@ namespace NewsNow.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Articles
+            var article = await _context.Articles.Include(a => a.Category)
                 .FirstOrDefaultAsync(m => m.ArticleId == id);
+
             if (article == null)
             {
                 return NotFound();
