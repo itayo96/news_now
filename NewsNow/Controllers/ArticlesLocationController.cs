@@ -26,11 +26,10 @@ namespace NewsNow.Controllers
 
         public ActionResult GetLocations()
         {
-            var locations = new List<PointF>()
+            var locations = new List<string>()
             {
-                new PointF(12.505353f,55.335292f),
-                 new PointF(13.505353f,55.485292f),
-                  new PointF(13.655353f,55.665292f)
+                "רעננה, Meẖoz HaMerkaz, ישראל",
+                "תל אביב, ישראל"
             };
             return Json(locations);
         }

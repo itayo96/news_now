@@ -22,17 +22,23 @@
     $('#btnShowLocations').click(function () {
         var url = "/ArticlesLocation/GetLocations";
         $.getJSON(url, null, function (data) {
-            var pins = [];
-
-            $.each(data, function (index, Coordinate) {
-                var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(Coordinate.x, Coordinate.y));
-                pins.push(pushpin);
+            $.each(data, function (index, LocationName) {
+                Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+                    var searchManager = new Microsoft.Maps.Search.SearchManager(map);
+                    var requestOptions = {
+                        bounds: map.getBounds(),
+                        where: LocationName,
+                        callback: function (answer, userData) {
+                            //map.setView({ bounds: answer.results[0].bestView });
+                            map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location))
+                        }
+                    };
+                    searchManager.geocode(requestOptions);
+                });
             });
 
-            map.entities.push(pins);
-
             map.setView({
-                zoom: 4, center: new Microsoft.Maps.Location(23.505353, 78.485292)
+                zoom: 10, center: new Microsoft.Maps.Location(32.18658, 34.872192)
             });
         });
     });
