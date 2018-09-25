@@ -26,11 +26,14 @@ namespace NewsNow.Controllers
 
         public ActionResult GetLocations()
         {
-            var locations = new List<string>()
+            var articles = _context.Articles.ToList();
+            var locations = new List<string>();
+
+            foreach (var article in articles)
             {
-                "רעננה, Meẖoz HaMerkaz, ישראל",
-                "תל אביב, ישראל"
-            };
+                locations.Add(article.Location);
+            }
+
             return Json(locations);
         }
     }

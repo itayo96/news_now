@@ -3,11 +3,8 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<input type="button" id="btnShowLocations" value="Show All Locations" />
-
 <div id="myMap" style="position:relative; width:600px; height:600px;"></div>
 
-@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
 @section Scripts
 {
 <script type="text/javascript">
@@ -17,10 +14,10 @@
         map = new Microsoft.Maps.Map('#myMap', {
             credentials: "AglcOvofpKm1X-WOXDY3_Cr0bxdAbKzUid-4bp7Em3BxbNPK_kT-X8iWI4B1RF0H"
         });
-    }
 
-    $('#btnShowLocations').click(function () {
         var url = "/ArticlesLocation/GetLocations";
+        var locations = [];
+        var count = 0;
         $.getJSON(url, null, function (data) {
             $.each(data, function (index, LocationName) {
                 Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
@@ -29,19 +26,20 @@
                         bounds: map.getBounds(),
                         where: LocationName,
                         callback: function (answer, userData) {
-                            //map.setView({ bounds: answer.results[0].bestView });
                             map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location))
+                            locations.push(answer.results[0].location)
+                            count++
+
+                            if (count == data.length) {
+                                map.setView({ bounds: Microsoft.Maps.LocationRect.fromLocations(locations) });
+                            }
                         }
                     };
                     searchManager.geocode(requestOptions);
                 });
             });
-
-            map.setView({
-                zoom: 10, center: new Microsoft.Maps.Location(32.18658, 34.872192)
-            });
         });
-    });
+    }
 </script>
 <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=LoadMap" async defer></script>
 }
