@@ -91,7 +91,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,Header,Summery,Content,HomeImageUrl")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,Header,Summery,Content,HomeImageUrl,Location")] Article article)
         {
             if (id != article.ArticleId)
             {
@@ -107,6 +107,7 @@ namespace NewsNow.Controllers
                     _context.Entry(article).Property(x => x.Header).IsModified = true;
                     _context.Entry(article).Property(x => x.Summery).IsModified = true;
                     _context.Entry(article).Property(x => x.HomeImageUrl).IsModified = true;
+                    _context.Entry(article).Property(x => x.Location).IsModified = true;
 
                     //_context.Update(article);
                     await _context.SaveChangesAsync();
