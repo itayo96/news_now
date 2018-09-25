@@ -33,6 +33,22 @@
                 <input asp-for="HomeImageUrl" class="form-control" />
                 <span asp-validation-for="HomeImageUrl" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <table>
+                    <tr>
+                        <th style="vertical-align:top;">
+                            <div id="locationContainer" style="width:465px;">
+                                <input asp-for="Location" class="form-control" id="locationSearch" autocomplete="off"/>
+                                <span asp-validation-for="Location" class="text-danger"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div id="myMap" style="width:300px; height:300px;"></div>
+                        </th>
+                    </tr>
+                </table>
+            </div>
 
         </div>
         <div class="col-md-12">
@@ -56,17 +72,62 @@
 
 @section Scripts
 {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var simplemde = new SimpleMDE({ element: $("#MDEditorTextArea")[0] });
-            var str = decodeHtml("@Model.Content")
-            simplemde.value(str);
-        })
+<script type="text/javascript">
+    $(document).ready(function () {
+        var simplemde = new SimpleMDE({ element: $("#MDEditorTextArea")[0] });
+        var str = decodeHtml("@Model.Content")
+        simplemde.value(str);
+    })
 
-        function decodeHtml(html) {
-            var txt = document.createElement("textarea");
-            txt.innerHTML = html;
-            return txt.value;
-        }
-    </script>
+    function decodeHtml(html) {
+        var txt = document.createElement("textarea");
+        txt.innerHTML = html;
+        return txt.value;
+    }
+
+    var map = null;
+
+    function LoadMap() {
+        map = new Microsoft.Maps.Map('#myMap', {
+            credentials: "AglcOvofpKm1X-WOXDY3_Cr0bxdAbKzUid-4bp7Em3BxbNPK_kT-X8iWI4B1RF0H",
+            showMapTypeSelector: false,
+            showZoomButtons: false,
+            showLocateMeButton: false
+        });
+
+        Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+            var searchManager = new Microsoft.Maps.Search.SearchManager(map);
+            var requestOptions = {
+                bounds: map.getBounds(),
+                where: decodeHtml("@Model.Location"),
+                callback: function (answer, userData) {
+                    map.setView({ bounds: answer.results[0].bestView });
+                    map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location))
+                }
+            };
+            searchManager.geocode(requestOptions);
+        });
+
+        Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
+            var options = {
+                maxResults: 4,
+                map: map
+            };
+            var manager = new Microsoft.Maps.AutosuggestManager(options);
+            manager.attachAutosuggest('#locationSearch', '#locationContainer', selectedSuggestion);
+        });
+    }
+        
+    function selectedSuggestion(suggestionResult) {
+        map.entities.clear();
+        map.setView({ bounds: suggestionResult.bestView });
+        var pushpin = new Microsoft.Maps.Pushpin(suggestionResult.location);
+        map.entities.push(pushpin);
+        //document.getElementById('printoutPanel').innerHTML =
+        //    'Suggestion: ' + suggestionResult.formattedSuggestion +
+        //    '<br> Lat: ' + suggestionResult.location.latitude +
+        //    '<br> Lon: ' + suggestionResult.location.longitude;
+    }
+</script>
+<script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=LoadMap" async defer></script>
 }

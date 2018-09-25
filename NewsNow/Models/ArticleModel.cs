@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NewsNow.Models
 {
@@ -19,5 +20,7 @@ namespace NewsNow.Models
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
+
+        public string Location { get; set; }
     }
 }
