@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Article>
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Index", "Search", FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.DropDownList("CategoryId", (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control" })
+    <input type="submit" value="Search" class="btn btn-primary" />
+}
+
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+        @Html.DisplayFor(model => item.Header)
+    }
+}
+
+@section Scripts
+{
+<script type="text/javascript">
+
+</script>
+}
