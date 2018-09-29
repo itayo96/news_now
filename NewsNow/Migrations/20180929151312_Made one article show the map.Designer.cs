@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsNow.Models;
 
 namespace NewsNow.Migrations
 {
     [DbContext(typeof(NewsNowContext))]
-    partial class NewsNowContextModelSnapshot : ModelSnapshot
+    [Migration("20180929151312_Made one article show the map")]
+    partial class Madeonearticleshowthemap
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

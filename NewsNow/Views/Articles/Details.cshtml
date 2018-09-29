@@ -22,7 +22,10 @@
     <br />
 </div>
 
-<div id="myMap" style="width:450px; height:180px;"></div>
+@if (Model.IsShowMap)
+{
+    <div id="articleMap" style="width:450px; height:180px;"></div>
+}
 
 <div class="row">
     <div class="col-md-8">
@@ -62,49 +65,25 @@
 </div>
 
 @section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var converter = new showdown.Converter(),
+                text = decodeHtml("@Model.Content"),
+                html = converter.makeHtml(text);
+
+            $("#ArticleContent").html(html);
+        })
+
+        function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+        }
+        </script>
+    @if (Model.IsShowMap)
     {
-<script type="text/javascript">
-    $(document).ready(function () {
-        var converter = new showdown.Converter(),
-            text = decodeHtml("@Model.Content"),
-            html = converter.makeHtml(text);
-
-        $("#ArticleContent").html(html);
-    })
-
-    function decodeHtml(html) {
-        var txt = document.createElement("textarea");
-        txt.innerHTML = html;
-        return txt.value;
+        <script type="text/javascript" src="~/js/article-map.js"></script>
+        <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=LoadMap" async defer></script>
     }
-
-    var map = null;
-
-    function LoadMap() {
-        map = new Microsoft.Maps.Map('#myMap', {
-            credentials: "AglcOvofpKm1X-WOXDY3_Cr0bxdAbKzUid-4bp7Em3BxbNPK_kT-X8iWI4B1RF0H",
-            showMapTypeSelector: false,
-            showZoomButtons: false,
-            showLocateMeButton: false
-        });
-
-        Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
-            var searchManager = new Microsoft.Maps.Search.SearchManager(map);
-            var requestOptions = {
-                bounds: map.getBounds(),
-                where: decodeHtml("@Model.Location"),
-                callback: function (answer, userData) {
-                    map.setView({ bounds: answer.results[0].bestView });
-                    map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location))
-                }
-            };
-            searchManager.geocode(requestOptions);
-        });
-    }
-
-    map.setView({
-        zoom: 10, center: new Microsoft.Maps.Location(32.18658, 34.872192)
-    });
-</script>
-<script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=LoadMap" async defer></script>
 }

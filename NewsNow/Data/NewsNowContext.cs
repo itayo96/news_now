@@ -44,7 +44,8 @@ namespace NewsNow.Models
                     Summery = "Iran blames the US and Saudi Arabia for military parade terror attack",
                     DateCreated = DateTime.Now,
                     HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/427101",
-                    Location = "תל אביב, ישראל",
+                    Location = "טהרן, אירן",
+                    IsShowMap = true,
                     Content = exampleContent
                 },
                 new Article()
