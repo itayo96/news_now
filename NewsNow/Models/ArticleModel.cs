@@ -22,5 +22,7 @@ namespace NewsNow.Models
         public virtual Category Category { get; set; }
 
         public string Location { get; set; }
+
+        public bool IsShowMap { get; set; }
     }
 }
