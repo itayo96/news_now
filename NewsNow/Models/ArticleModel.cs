@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NewsNow.Models
@@ -24,5 +25,7 @@ namespace NewsNow.Models
         public string Location { get; set; }
 
         public bool IsShowMap { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }

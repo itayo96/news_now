@@ -22,12 +22,76 @@
     <br />
 </div>
 
-
-
 <div class="row">
     <div class="col-md-8">
-        <div id="ArticleContent">
-
+        <div class="col-12">
+            <div id="ArticleContent" class="border-bottom"></div>
+        </div>
+        <div class="col-12">
+            <h3>Comments</h3>
+            <div class="border-bottom mb-2">
+                <form>
+                    <div class="form-group form-group-sm">
+                        <input class="form-control" type="text" />
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <textarea class="form-control" rows="2" placeholder="What do you think abot this?"></textarea>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <button class="btn btn-success btn-sm mr-2">Post it!</button>
+                        Remember: Keep it clean!
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <small>
+                    @Model.Comments.Count comments
+                </small>
+                <div class="list-group">
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <div class="media mb-1 border-bottom">
+                            <div class="media-left">
+                                <table class="comment-number-container mr-2">
+                                    <tbody>
+                                    <td class="align-middle text-center">1729</td>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="media-body">
+                                <small>@comment.Author</small>
+                                <p>@comment.Content</p>
+                            </div>
+                            <div class="media-right mt-2 btn-group">
+                                <span class="mr-2">
+                                    <big><b>172</b></big> Likes
+                                </span>
+                                <a href="#" class="btn border-info btn-sm">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                                </a>
+                                <a href="#" class="btn border-dark btn-sm">
+                                    Report
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
     <div class="col-lg-4">
@@ -71,14 +135,14 @@
 </div>
 
 @section Scripts
-{
+    {
     <script type="text/javascript">
 
         $(document).ready(function () {
             $("#ArticleContent").html(markdown_to_html("@Model.Content"));
         })
-        
-        </script>
+
+    </script>
 
     @if (Model.IsShowMap)
     {
