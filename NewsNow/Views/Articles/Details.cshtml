@@ -74,29 +74,10 @@
 {
     <script type="text/javascript">
 
-        var bootstrap_img_converter = function (converter) {
-            return [
-                {
-                    type: 'html',
-                    regex: '<img src=(.*)>',
-                    replace: '<img class="img-fluid img-thumbnail" src=$1>'
-                }
-            ]
-        }
-
         $(document).ready(function () {
-            var converter = new showdown.Converter({ extensions: [bootstrap_img_converter] }),
-                text = decodeHtml("@Model.Content"),
-                html = converter.makeHtml(text);
-
-            $("#ArticleContent").html(html);
+            $("#ArticleContent").html(markdown_to_html("@Model.Content"));
         })
-
-        function decodeHtml(html) {
-            var txt = document.createElement("textarea");
-            txt.innerHTML = html;
-            return txt.value;
-        }
+        
         </script>
 
     @if (Model.IsShowMap)
