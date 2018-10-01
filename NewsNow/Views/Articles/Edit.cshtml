@@ -74,17 +74,9 @@
 {
 <script type="text/javascript">
     $(document).ready(function () {
-        var simplemde = new SimpleMDE({ element: $("#MDEditorTextArea")[0] });
-        var str = decodeHtml("@Model.Content")
-        simplemde.value(str);
+        make_markdown_editor($("#MDEditorTextArea")[0], "@Model.Content")
     })
-
-    function decodeHtml(html) {
-        var txt = document.createElement("textarea");
-        txt.innerHTML = html;
-        return txt.value;
-    }
-
+    
     var map = null;
 
     function LoadMap() {
