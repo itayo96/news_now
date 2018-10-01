@@ -21,13 +21,40 @@
     <br />
     <br />
 </div>
-
-
-
 <div class="row">
     <div class="col-md-8">
-        <div id="ArticleContent">
+        <div class="col-12">
+            <div id="ArticleContent" class="border-bottom"></div>
+        </div>
+        <div class="col-12">
+            <h3>Comments</h3>
+            <div class="border-bottom mb-2">
+                <form id="newCommentForm">
+                    <div class="form-group form-group-sm">
+                        <input type="text" name="Author" class="form-control" placeholder="Who are you?" />
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <textarea name="Content" class="form-control" rows="2" placeholder="And what do you think about this?"></textarea>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <input type="hidden" name="ArticleId" class="form-control" value="@Model.ArticleId"/>
+                    </div>
+                    <div class="form-group form-group-sm" >
+                        <button type="button" class="btn btn-success btn-sm mr-2" data-toggle="modal" data-target="#commentModal">Post it!</button>
+                        Remember: Keep it clean!
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <small id="commentsCountLabel">
+                    Loading comments...
+                </small>
+                <div class="list-group" id="commentsList">
+                </div>
+            </div>
+            <div id="result">
 
+            </div>
         </div>
     </div>
     <div class="col-lg-4">
@@ -70,15 +97,71 @@
     </div>
 </div>
 
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commentModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">asdasd</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to post this comment?
+
+                <small>The comment will be posted as soon as possible, After a brief check</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="post_comment()">Post comment!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
-{
+    {
+    <script id="commentTemplate" type="text/x-jQuery-tmpl">
+        <div class="media mb-1 border-bottom">
+            <div class="media-left">
+                <table class="comment-number-container mr-2">
+                    <tbody>
+                    <td class="align-middle text-center">#${sequence}</td>
+                    </tbody>
+                </table>
+            </div>
+            <div class="media-body">
+                <small>${author}</small>
+                <p>${content}</p>
+            </div>
+            <a href="#">Report</a>
+        </div>
+    </script>
+
     <script type="text/javascript">
 
         $(document).ready(function () {
             $("#ArticleContent").html(markdown_to_html("@Model.Content"));
+
+            update_comments()
         })
-        
-        </script>
+
+        var post_comment = function () {
+            var data = $("#newCommentForm").serializeArray()
+            new_comment(data[0].value, data[1].value, data[2].value)
+            console.log(data)
+        }
+
+        var update_comments = function () {
+            get_comments(@Model.ArticleId).then(function (comments) {    
+                comments.forEach(comment => {
+                    $("#commentTemplate").tmpl(comment).appendTo("#commentsList");
+                })
+                $("#commentsCountLabel").html(comments.length + " Comments")
+            })
+        }
+
+    </script>
 
     @if (Model.IsShowMap)
     {

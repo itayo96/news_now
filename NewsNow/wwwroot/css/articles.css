@@ -17,6 +17,10 @@
     color: darkred !important;
 }
 
-#ArticleContent img {
-
+.comment-number-container {
+    width: 60px;
+    height: 60px;
+    background-color: #D1C1E0;
+    font-size: 20px;
+    border-radius: 100px;
 }
