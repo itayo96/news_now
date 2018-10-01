@@ -6,15 +6,15 @@
 
 <div class="card" style="width: 18rem; background-color: #f2eeee">
     <a asp-controller="Articles" asp-action="Details" asp-route-id="@Html.DisplayFor(model => model.ArticleId)">
-        <img data-toggle="tooltip" 
-             data-html="true" 
-             data-placement="bottom" 
-             title="@Html.DisplayFor(model => model.Summery)" 
-             class="card-img-top" 
-             data-src="holder.js/100px180/" 
-             alt="100%x180" 
-             style="height: 180px; width: 100%; display: block;" 
-             src="@Html.DisplayFor(model => model.HomeImageUrl)" 
+        <img data-toggle="tooltip"
+             data-html="true"
+             data-placement="bottom"
+             title="@Html.DisplayFor(model => model.Summery)"
+             class="card-img-top"
+             data-src="holder.js/100px180/"
+             alt="100%x180"
+             style="height: 180px; width: 100%; display: block;"
+             src="@Html.DisplayFor(model => model.HomeImageUrl)"
              data-holder-rendered="true">
     </a>
     <div class="card-body">

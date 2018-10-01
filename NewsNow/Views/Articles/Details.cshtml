@@ -21,7 +21,6 @@
     <br />
     <br />
 </div>
-
 <div class="row">
     <div class="col-md-8">
         <div class="col-12">
@@ -30,67 +29,31 @@
         <div class="col-12">
             <h3>Comments</h3>
             <div class="border-bottom mb-2">
-                <form>
+                <form id="newCommentForm">
                     <div class="form-group form-group-sm">
-                        <input class="form-control" type="text" />
+                        <input type="text" name="Author" class="form-control" placeholder="Who are you?" />
                     </div>
                     <div class="form-group form-group-sm">
-                        <textarea class="form-control" rows="2" placeholder="What do you think abot this?"></textarea>
+                        <textarea name="Content" class="form-control" rows="2" placeholder="And what do you think about this?"></textarea>
                     </div>
                     <div class="form-group form-group-sm">
-                        <button class="btn btn-success btn-sm mr-2">Post it!</button>
+                        <input type="hidden" name="ArticleId" class="form-control" value="@Model.ArticleId"/>
+                    </div>
+                    <div class="form-group form-group-sm" >
+                        <button type="button" class="btn btn-success btn-sm mr-2" data-toggle="modal" data-target="#commentModal">Post it!</button>
                         Remember: Keep it clean!
                     </div>
                 </form>
             </div>
             <div class="col-md-12">
-                <small>
-                    @Model.Comments.Count comments
+                <small id="commentsCountLabel">
+                    Loading comments...
                 </small>
-                <div class="list-group">
-                    @foreach (var comment in Model.Comments)
-                    {
-                        <div class="media mb-1 border-bottom">
-                            <div class="media-left">
-                                <table class="comment-number-container mr-2">
-                                    <tbody>
-                                    <td class="align-middle text-center">1729</td>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="media-body">
-                                <small>@comment.Author</small>
-                                <p>@comment.Content</p>
-                            </div>
-                            <div class="media-right mt-2 btn-group">
-                                <span class="mr-2">
-                                    <big><b>172</b></big> Likes
-                                </span>
-                                <a href="#" class="btn border-info btn-sm">
-                                    <span class="glyphicon glyphicon-thumbs-up"></span> Like
-                                </a>
-                                <a href="#" class="btn border-dark btn-sm">
-                                    Report
-                                </a>
-                            </div>
-                        </div>
-                    }
+                <div class="list-group" id="commentsList">
                 </div>
-                <nav aria-label="...">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+            </div>
+            <div id="result">
+
             </div>
         </div>
     </div>
@@ -134,13 +97,69 @@
     </div>
 </div>
 
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commentModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">asdasd</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to post this comment?
+
+                <small>The comment will be posted as soon as possible, After a brief check</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="post_comment()">Post comment!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
     {
+    <script id="commentTemplate" type="text/x-jQuery-tmpl">
+        <div class="media mb-1 border-bottom">
+            <div class="media-left">
+                <table class="comment-number-container mr-2">
+                    <tbody>
+                    <td class="align-middle text-center">#${sequence}</td>
+                    </tbody>
+                </table>
+            </div>
+            <div class="media-body">
+                <small>${author}</small>
+                <p>${content}</p>
+            </div>
+            <a href="#">Report</a>
+        </div>
+    </script>
+
     <script type="text/javascript">
 
         $(document).ready(function () {
             $("#ArticleContent").html(markdown_to_html("@Model.Content"));
+
+            update_comments()
         })
+
+        var post_comment = function () {
+            var data = $("#newCommentForm").serializeArray()
+            new_comment(data[0].value, data[1].value, data[2].value)
+            console.log(data)
+        }
+
+        var update_comments = function () {
+            get_comments(@Model.ArticleId).then(function (comments) {    
+                comments.forEach(comment => {
+                    $("#commentTemplate").tmpl(comment).appendTo("#commentsList");
+                })
+                $("#commentsCountLabel").html(comments.length + " Comments")
+            })
+        }
 
     </script>
 

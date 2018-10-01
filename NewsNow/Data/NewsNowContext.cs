@@ -20,6 +20,8 @@ namespace NewsNow.Models
 
         public DbSet<NewsNow.Models.Category> Categories { get; set; }
 
+        public DbSet<NewsNow.Models.Comment> Comments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>()
@@ -164,8 +166,9 @@ namespace NewsNow.Models
                 }
             );
 
-            modelBuilder.Entity<Comment>().HasData(new Comment() { CommentId = 1, ArticleId=1, Author = "abc", Content = "example" });
-            modelBuilder.Entity<Comment>().HasData(new Comment() { CommentId = 2, ArticleId = 1, Author = "123", Content = "example2" });
+            modelBuilder.Entity<Comment>().HasData(new Comment() { CommentId = 1, ArticleId = 1, Author = "The one who knows", Content = "Example content for an example comment", Sequence = 1 });
+            modelBuilder.Entity<Comment>().HasData(new Comment() { CommentId = 2, ArticleId = 1, Author = "Voldemort", Content = "Multi line comment! I think this is an example comment", Sequence = 2 });
+            modelBuilder.Entity<Comment>().HasData(new Comment() { CommentId = 3, ArticleId = 1, Author = "Jimmi", Content = "Example content for an example comment", Sequence = 3 });
         }
 
         static string exampleContent = "This is an example article with multiple paragraphs, **bolds**, *\"quotes\"* and others.\r\n\r\n\r\nexample paragraph\r\n--\r\n\r\nThe statement from attorneys Debra Katz, Lisa Banks and Michael Bromwich came after a call Sunday with staff for the Senate Judiciary Committee. Kavanaugh has denied the allegations and said he wants to testify before the committee.\r\n\r\n*\"Despite actual threats to her safety and her life, Dr. Ford believes it is important for Senators to hear directly from her about the sexual assault committed against her,\"* the statement read.\r\n\r\nparagraph with image\r\n--\r\n*\"We stand with the Iranian people against the scourge of radical Islamic terrorism and express our sympathy to them at this terrible time,\"* she said Saturday.\r\n\r\nThe parade was part of nationwide celebrations in Iran to mark the 30th anniversary of the end of its eight-year war with Iraq.\r\nGunmen opened fire on armed forces marching inside a park as well as spectators who had gathered to watch the parade, Iranian armed forces spokesman Brig. Gen. Abolfazl Shekarchi told Mehr, a semi-official Iranian news agency.\r\nAll four attackers were killed during clashes with security forces, IRNA reported, citing the deputy governor-general of Khuzestan province, where the attack happened.\r\n\r\n![](https://cdn.cnn.com/cnnnext/dam/assets/180922044651-iran-parade-attack-09-22-18-exlarge-169.jpg)\r\n*Injured soldiers lie on the ground after Saturday's attack on a military parade Ahvaz, Iran.*\r\n\r\n*\"The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,\"* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.\r\nKhuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.\r\n";

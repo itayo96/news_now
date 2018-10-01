@@ -37,8 +37,7 @@ namespace NewsNow.Controllers
                 return NotFound();
             }
 
-            var article = await _context.Articles.Include(a => a.Category).Include(a => a.Comments)
-                .FirstOrDefaultAsync(m => m.ArticleId == id);
+            var article = await _context.Articles.Include(a => a.Category).FirstOrDefaultAsync(m => m.ArticleId == id);
 
             if (article == null)
             {
@@ -46,6 +45,23 @@ namespace NewsNow.Controllers
             }
 
             return View(article);
+        }
+
+        public async Task<IActionResult> Comments(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var comments = await _context.Comments.Where(c => c.ArticleId == id.Value).ToListAsync();
+
+            if (comments == null)
+            {
+                return NotFound();
+            }
+
+            return Json(comments);
         }
 
         // GET: Articles/Create

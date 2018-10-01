@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsNow.Models;
 
 namespace NewsNow.Migrations
 {
     [DbContext(typeof(NewsNowContext))]
-    partial class NewsNowContextModelSnapshot : ModelSnapshot
+    [Migration("20181001192748_Some example comments")]
+    partial class Someexamplecomments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -363,7 +365,7 @@ Khuzestan is a province that borders Iraq and has a large ethnic Arab community,
 
                     b.HasData(
                         new { CommentId = 1, ArticleId = 1, Author = "The one who knows", Content = "Example content for an example comment", Sequence = 1 },
-                        new { CommentId = 2, ArticleId = 1, Author = "Voldemort", Content = "Multi line comment!\nI think this is an example comment", Sequence = 2 },
+                        new { CommentId = 2, ArticleId = 1, Author = "Voldemort", Content = "Multi line comment\n I think this is an example comment", Sequence = 2 },
                         new { CommentId = 3, ArticleId = 1, Author = "Jimmi", Content = "Example content for an example comment", Sequence = 3 }
                     );
                 });

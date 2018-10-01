@@ -11,6 +11,8 @@ namespace NewsNow.Models
 
         public string Content { get; set; }
 
+        public int Sequence { get; set; }
+
         public int ArticleId { get; set; }
 
         public virtual Article Article{ get; set; }
