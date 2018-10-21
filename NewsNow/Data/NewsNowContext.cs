@@ -22,6 +22,8 @@ namespace NewsNow.Models
 
         public DbSet<NewsNow.Models.Comment> Comments { get; set; }
 
+        public DbSet<NewsNow.Models.User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>()
@@ -40,6 +42,8 @@ namespace NewsNow.Models
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 4, Name = "Sports", Description = "And its a score!", Color = System.Drawing.Color.DarkRed });
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 5, Name = "Culture", Description = "Music, movies and the starts", Color = System.Drawing.Color.Crimson });
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 6, Name = "Opinions", Description = "I Think...", Color = System.Drawing.Color.SeaGreen });
+
+            modelBuilder.Entity<User>().HasData(new User { UserId = 1, Username = "Isaac Garzoon", Password = "letmein", Permissions = "Allowed" });
 
             modelBuilder.Entity<Article>().HasData(
                 new Article()
