@@ -17,7 +17,12 @@ namespace NewsNow.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Users.ToListAsync());
+        }
+
+        public IActionResult Create()
         {
             return View();
         }
@@ -51,6 +56,21 @@ namespace NewsNow.Controllers
                 return NotFound();
             }
 
+            return View(user);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
             return View(user);
         }
 
@@ -90,6 +110,23 @@ namespace NewsNow.Controllers
                 }
 
                 return RedirectToAction(nameof(Index));
+            }
+
+            return View(user);
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(m => m.UserId == id);
+
+            if (user == null)
+            {
+                return NotFound();
             }
 
             return View(user);

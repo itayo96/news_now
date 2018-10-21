@@ -1,0 +1,79 @@
+﻿@model NewsNow.Models.User
+
+@{
+    ViewData["Title"] = Model.Username;
+}
+
+
+<div class="page-header">
+    <h1>@Html.DisplayFor(model => model.Username)</h1>
+    <p>
+        @Html.DisplayFor(model => model.Password)
+    </p>
+
+    <div class="btn-group" role="group" aria-label="...">
+        <a asp-action="Edit" asp-route-id="@Model.UserId" class="btn btn-sm btn-outline-secondary">Edit</a>
+        <a href="/" class="btn btn-sm btn-outline-secondary">Home</a>
+    </div>
+    <br />
+    <br />
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="col-12">
+            <div id="ArticleContent" class="border-bottom"></div>
+        </div>
+        <div class="col-12">
+            <h3>Comments</h3>
+            <div class="border-bottom mb-2">
+                <form id="newCommentForm">
+                    <div class="form-group form-group-sm">
+                        <input type="text" name="Author" class="form-control" placeholder="Who are you?" />
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <textarea name="Content" class="form-control" rows="2" placeholder="And what do you think about this?"></textarea>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <input type="hidden" name="ArticleId" class="form-control" value="@Model.UserId" />
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <button type="button" class="btn btn-success btn-sm mr-2" data-toggle="modal" data-target="#commentModal">Post it!</button>
+                        Remember: Keep it clean!
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <small id="commentsCountLabel">
+                    Loading comments...
+                </small>
+                <div class="list-group" id="commentsList">
+                </div>
+            </div>
+            <div id="result">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commentModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">asdasd</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to post this comment?
+
+                <small>The comment will be posted as soon as possible, After a brief check</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="post_comment()">Post comment!</button>
+            </div>
+        </div>
+    </div>
+</div>

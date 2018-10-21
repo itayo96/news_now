@@ -43,7 +43,8 @@ namespace NewsNow.Models
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 5, Name = "Culture", Description = "Music, movies and the starts", Color = System.Drawing.Color.Crimson });
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 6, Name = "Opinions", Description = "I Think...", Color = System.Drawing.Color.SeaGreen });
 
-            modelBuilder.Entity<User>().HasData(new User { UserId = 1, Username = "Isaac Garzoon", Password = "letmein", Permissions = "Allowed" });
+            modelBuilder.Entity<User>().HasData(new User { UserId = 1, Username = "Isaac Garzoon", Password = "letmein", Permissions = "Allowed" },
+                                                new User { UserId = 2, Username = "username", Password = "password", Permissions = "Allowed" });
 
             modelBuilder.Entity<Article>().HasData(
                 new Article()
