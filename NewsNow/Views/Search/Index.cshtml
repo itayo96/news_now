@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Article>
+@model IEnumerable<Article>
 @{
     ViewBag.Title = "Search";
 }
@@ -10,20 +10,29 @@
     @Html.AntiForgeryToken()
 
     @Html.DropDownList("CategoryId", (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control" })
+    <input class="form-control" type="text" id="Summery" name="Summery" value="Title">
+    <input class="form-control" type="text" id="Summery" name="Summery" value="Date">
+    <input class="form-control" type="text" id="Summery" name="Summery" value="Text">
     <input type="submit" value="Search" class="btn btn-primary" />
 }
+
+
 
 @if (Model != null && Model.Any())
 {
     foreach (var item in Model)
     {
-        @Html.DisplayFor(model => item.Header)
+        <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.ArticleId">
+            <dd>
+                @Html.DisplayFor(model => item.Header)
+            </dd>
+        </a>
     }
 }
 
 @section Scripts
-{
-<script type="text/javascript">
+    {
+    <script type="text/javascript">
 
-</script>
+    </script>
 }
