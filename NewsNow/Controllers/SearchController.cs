@@ -17,28 +17,54 @@ namespace NewsNow.Controllers
         public DateTime? DateCreated { get; set; }
     }
 
-    public class SearchController : Controller
+    public class ArticlesFilter
     {
         private readonly NewsNowContext _context;
 
-        public SearchController(NewsNowContext context)
+        public ArticlesFilter(NewsNowContext context)
         {
             _context = context;
         }
 
-        // GET: Articles
-        public async Task<IActionResult> Index(string categoryId)
+        public IQueryable<Article> GetArticles(ArticlesSearchModel searchModel)
         {
-            ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "Name", categoryId);    // preselect item in selectlist by categoryId param
+            var result = _context.Articles.AsQueryable();
 
-            if (String.IsNullOrWhiteSpace(categoryId))
+            if (searchModel != null)
             {
-                return View();
+                if (!String.IsNullOrWhiteSpace(searchModel.CategoryId))
+                    result = result.Where(x => x.CategoryId == Int32.Parse(searchModel.CategoryId));
+                if (!String.IsNullOrWhiteSpace(searchModel.Header))
+                    result = result.Where(x => x.Header.Contains(searchModel.Header));
+                if (!String.IsNullOrWhiteSpace(searchModel.Summery))
+                    result = result.Where(x => x.Summery.Contains(searchModel.Summery));
+                if (searchModel.DateCreated.HasValue)
+                    result = result.Where(x => x.DateCreated.Value.Date == searchModel.DateCreated.Value.Date);
             }
 
-            var result = _context.Articles.Where(x => x.CategoryId == Int32.Parse(categoryId)).Take(50);
+            return result;
+        }
+    }
 
-            return View(result);
+
+    public class SearchController : Controller
+    {
+        private readonly NewsNowContext _context;
+        private ArticlesFilter _filter;
+
+        public SearchController(NewsNowContext context)
+        {
+            _context = context;
+            _filter = new ArticlesFilter(context);
+        }
+
+        // GET: Articles
+        public async Task<IActionResult> Index(ArticlesSearchModel searchModel)
+        {
+            ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "Name", searchModel.CategoryId);    // preselect item in selectlist by categoryId param
+
+            var model = _filter.GetArticles(searchModel);
+            return View(model.Take(50));
         }
     }
 }
