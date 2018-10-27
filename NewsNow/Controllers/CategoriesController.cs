@@ -88,7 +88,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Category categoryModel)
+        public async Task<IActionResult> Edit(int id, [Bind("CategoryId, Name, Description, Color")] Category categoryModel)
         {
             if (id != categoryModel.CategoryId)
             {
