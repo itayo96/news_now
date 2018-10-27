@@ -1,0 +1,37 @@
+@model IEnumerable<Article>
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Index", "Search", FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.DropDownList("CategoryId", (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control" })
+    @Html.TextBox("Header", "", new { @class = "form-control", @placeholder = "Title" })
+    @Html.TextBox("Summery", "", new { @class = "form-control", @placeholder = "Summery"})
+    @Html.TextBox("DateCreated", DateTime.Now, new { @type = "date", @class = "form-control" })
+    <input type="submit" value="Search" class="btn btn-primary" />
+}
+
+<br />
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.ArticleId">
+            <dd>
+                @Html.DisplayFor(model => item.Header)
+            </dd>
+        </a>
+    }
+}
+
+@section Scripts
+    {
+    <script type="text/javascript">
+
+    </script>
+}
