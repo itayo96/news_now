@@ -27,6 +27,9 @@ namespace NewsNow.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            List<Article> articles = await _context.Articles.ToListAsync();
+            ViewData["Articles"] = articles.Where(x => x.CategoryId == id).ToList();
+
             if (id == null)
             {
                 return NotFound();
