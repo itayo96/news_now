@@ -10,14 +10,13 @@
     @Html.AntiForgeryToken()
 
     @Html.DropDownList("CategoryId", (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control" })
-    <input class="form-control" type="text" id="Summery" name="Summery" value="Title">
-    <input class="form-control" type="text" id="Summery" name="Summery" value="Date">
-    <input class="form-control" type="text" id="Summery" name="Summery" value="Text">
+    @Html.TextBox("Header", "Title")
+    @Html.TextBox("Summery", "Summery")
+    @Html.TextBox("DateCreated", DateTime.Now, new { @type = "date"})
     <input type="submit" value="Search" class="btn btn-primary" />
 }
 
-
-
+<br />
 @if (Model != null && Model.Any())
 {
     foreach (var item in Model)
