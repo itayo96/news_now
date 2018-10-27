@@ -10,9 +10,9 @@
     @Html.AntiForgeryToken()
 
     @Html.DropDownList("CategoryId", (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control" })
-    @Html.TextBox("Header", "Title")
-    @Html.TextBox("Summery", "Summery")
-    @Html.TextBox("DateCreated", DateTime.Now, new { @type = "date"})
+    @Html.TextBox("Header", "", new { @class = "form-control", @placeholder = "Title" })
+    @Html.TextBox("Summery", "", new { @class = "form-control", @placeholder = "Summery"})
+    @Html.TextBox("DateCreated", DateTime.Now, new { @type = "date", @class = "form-control" })
     <input type="submit" value="Search" class="btn btn-primary" />
 }
 
