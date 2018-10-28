@@ -27,6 +27,9 @@ namespace NewsNow.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            List<Article> articles = await _context.Articles.ToListAsync();
+            ViewData["Articles"] = articles.Where(x => x.CategoryId == id).ToList();
+
             if (id == null)
             {
                 return NotFound();
@@ -53,7 +56,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] Category categoryModel)
+        public async Task<IActionResult> Create([Bind("CategoryId, Name, Description, Color")] Category categoryModel)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +88,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Category categoryModel)
+        public async Task<IActionResult> Edit(int id, [Bind("CategoryId, Name, Description, Color")] Category categoryModel)
         {
             if (id != categoryModel.CategoryId)
             {
@@ -130,14 +133,24 @@ namespace NewsNow.Controllers
                 return NotFound();
             }
 
+            ViewBag.RemainingCategories = 
+                new SelectList(_context.Categories.Where(x => x.CategoryId != categoryModel.CategoryId), "CategoryId", "Name");
+
             return View(categoryModel);
         }
 
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int NewCategoryId)
         {
+            // Change the category of the articles with the deleted category
+            foreach (Article article in _context.Articles.Where(article => article.CategoryId == id))
+            {
+                // TODO: Figure out why it seems like the articles are deleted rather than changing category
+                article.CategoryId = NewCategoryId;
+            }
+
             var categoryModel = await _context.Categories.FindAsync(id);
             _context.Categories.Remove(categoryModel);
             await _context.SaveChangesAsync();
