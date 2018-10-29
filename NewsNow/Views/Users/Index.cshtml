@@ -13,14 +13,17 @@
 </p>
 <table class="table">
     <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-    </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+        </tr>
     </thead>
     <tbody>
     @foreach (var item in Model)
@@ -30,11 +33,15 @@
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
             <td>
+                <input ID='PASS_@item.UserId' type="password" value="@Html.DisplayFor(modelItem => item.Password)">                   
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
+                <a href="#" onclick="$('#PASS_@item.UserId').attr({type:'text'}); $(this).hide(); $(this).next().show(); return false;">Show Password</a>
+                <a href="#" onclick="$('#PASS_@item.UserId').attr({type:'password'}); $(this).hide(); $(this).prev().show(); return false;" style="display: none">Hide Password</a> |
                 <a asp-action="Remove" asp-route-id="@item.UserId">Remove</a>
             </td>
         </tr>

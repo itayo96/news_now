@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NewsNow.Models;
@@ -22,6 +24,22 @@ namespace NewsNow.Controllers
             return View(await _context.Users.ToListAsync());
         }
 
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            User user = _context.Users.Single(m => m.UserId == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -29,12 +47,11 @@ namespace NewsNow.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,Username,Password,Permissions")]
-            User user)
+        public async Task<IActionResult> Create(User user)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Users.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -89,10 +106,12 @@ namespace NewsNow.Controllers
                 try
                 {
                     _context.Users.Attach(user);
-                    _context.Entry(user).Property(x => x.UserId).IsModified = true;
                     _context.Entry(user).Property(x => x.Username).IsModified = true;
                     _context.Entry(user).Property(x => x.Password).IsModified = true;
-                    _context.Entry(user).Property(x => x.Permissions).IsModified = true;
+                    _context.Entry(user).Property(x => x.FirstName).IsModified = true;
+                    _context.Entry(user).Property(x => x.LastName).IsModified = true;
+                    _context.Entry(user).Property(x => x.BirthDate).IsModified = true;
+                    _context.Entry(user).Property(x => x.isWriter).IsModified = true;
 
                     //_context.Update(article);
                     await _context.SaveChangesAsync();
@@ -115,21 +134,15 @@ namespace NewsNow.Controllers
             return View(user);
         }
 
-        public async Task<IActionResult> Details(int? id)
+        // POST: Users/Remove/5
+        [HttpPost, ActionName("Remove")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveConfirmed(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.Users.FirstOrDefaultAsync(m => m.UserId == id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
+            var user = await _context.Users.FindAsync(id);
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(int id)
