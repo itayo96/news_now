@@ -67,6 +67,7 @@ namespace NewsNow.Controllers
         // GET: Articles/Create
         public IActionResult Create()
         {
+            ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "Name");
             return View();
         }
 
@@ -75,15 +76,15 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,Header")] Article article)
+        public async Task<IActionResult> Create([Bind("Header,Summery,Content,HomeImageUrl,CategoryId,Location")] Article articleModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(article);
+                _context.Add(articleModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(article);
+            return View(articleModel);
         }
 
         // GET: Articles/Edit/5
@@ -125,7 +126,6 @@ namespace NewsNow.Controllers
                     _context.Entry(article).Property(x => x.HomeImageUrl).IsModified = true;
                     _context.Entry(article).Property(x => x.Location).IsModified = true;
 
-                    //_context.Update(article);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

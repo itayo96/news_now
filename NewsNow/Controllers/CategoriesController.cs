@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,8 +27,8 @@ namespace NewsNow.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            List<Article> articles = await _context.Articles.ToListAsync();
-            ViewData["Articles"] = articles.Where(x => x.CategoryId == id).ToList();
+            ViewData["Articles"] = await _context.Articles
+                .Where(x => x.CategoryId == id).ToListAsync();
 
             if (id == null)
             {
