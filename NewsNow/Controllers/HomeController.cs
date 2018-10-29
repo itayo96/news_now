@@ -35,7 +35,7 @@ namespace NewsNow.Controllers
 
             // TODO: Actually calculate the featured articles
             ViewData["Categories"] = categories;
-            ViewData["MainArticle"] = await _context.Articles.FindAsync(1);
+            ViewData["MainArticle"] = (_context.Articles.Any() ? await _context.Articles.FirstAsync() : null);
             ViewData["Featured"] = await _context.Articles.Skip(1).Take(2).ToListAsync();
             ViewData["Articles"] = await _context.Articles.ToListAsync();
 

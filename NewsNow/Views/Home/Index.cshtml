@@ -13,21 +13,25 @@
     </nav>
 </div>
 
-<!--Main featured article-->
-<div class="card flex-md-row mb-4 box-shadow h-md-250 home-main-article">
-    <div class="card-body d-flex flex-column align-items-start">
-        <strong class="d-inline-block mb-2 text-primary">?CATEGORY?</strong> @*TODO: Add category here*@
-        <h3 class="mb-0">
-            <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)" class="text-dark">@(((Article)ViewData["MainArticle"]).Header)</a>
-        </h3>
-        <div class="mb-1 text-muted">@(((Article)ViewData["MainArticle"]).DateCreated)</div>
-        <p class="card-text mb-auto">@(((Article)ViewData["MainArticle"]).Summery)</p>
-        <a class="btn btn-sm btn-outline-secondary" asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">Read more</a>
+@if (ViewData["MainArticle"] != null)
+{
+    <!--Main featured article-->
+    <div class="card flex-md-row mb-4 box-shadow h-md-250 home-main-article">
+        <div class="card-body d-flex flex-column align-items-start">
+            <strong class="d-inline-block mb-2 text-primary">?CATEGORY?</strong> @*TODO: Add category here*@
+            <h3 class="mb-0">
+                <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)" class="text-dark">@(((Article)ViewData["MainArticle"]).Header)</a>
+            </h3>
+            <div class="mb-1 text-muted">@(((Article)ViewData["MainArticle"]).DateCreated)</div>
+            <p class="card-text mb-auto">@(((Article)ViewData["MainArticle"]).Summery)</p>
+            <a class="btn btn-sm btn-outline-secondary" asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">Read more</a>
+        </div>
+        <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">
+            <img class="card-img-right flex-auto d-none d-md-block" style="width: 550px; height: 350px;" src="@(((Article)ViewData["MainArticle"]).HomeImageUrl)" data-holder-rendered="true" />
+        </a>
     </div>
-    <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">
-        <img class="card-img-right flex-auto d-none d-md-block" style="width: 550px; height: 350px;" src="@(((Article)ViewData["MainArticle"]).HomeImageUrl)" data-holder-rendered="true" />
-    </a>
-</div>
+}
+
 
 <h3 class="pb-3 mb-4 font-italic border-bottom">Featured <small>The MUST READ articles</small></h3>
 <div class="row mb-2">
