@@ -100,6 +100,9 @@ namespace NewsNow.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "Name");
+
             return View(article);
         }
 
@@ -108,7 +111,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,Header,Summery,Content,HomeImageUrl,Location")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,Header,Summery,Content,HomeImageUrl,CategoryId,Location")] Article article)
         {
             if (id != article.ArticleId)
             {
@@ -124,6 +127,7 @@ namespace NewsNow.Controllers
                     _context.Entry(article).Property(x => x.Header).IsModified = true;
                     _context.Entry(article).Property(x => x.Summery).IsModified = true;
                     _context.Entry(article).Property(x => x.HomeImageUrl).IsModified = true;
+                    _context.Entry(article).Property(x => x.CategoryId).IsModified = true;
                     _context.Entry(article).Property(x => x.Location).IsModified = true;
 
                     await _context.SaveChangesAsync();
