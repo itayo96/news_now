@@ -36,7 +36,7 @@ namespace NewsNow.Models
 
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 1, Name = "World", Description = "World wide news", Color = System.Drawing.Color.MidnightBlue });
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 2, Name = "Politics", Description = "Debates and conflicts", Color = System.Drawing.Color.DarkMagenta });
-            modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 3, Name = "Buisness", Description = "Trade, commerce and money", Color = System.Drawing.Color.DarkGreen });
+            modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 3, Name = "Business", Description = "Trade, commerce and money", Color = System.Drawing.Color.DarkGreen });
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 4, Name = "Sports", Description = "And its a score!", Color = System.Drawing.Color.DarkRed });
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 5, Name = "Culture", Description = "Music, movies and the starts", Color = System.Drawing.Color.Crimson });
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 6, Name = "Opinions", Description = "I Think...", Color = System.Drawing.Color.SeaGreen });
@@ -58,7 +58,7 @@ namespace NewsNow.Models
                 {
                     ArticleId = 2,
                     CategoryId = 2,
-                    Header = "Gilad Erdan: Israel making progess against Terror",
+                    Header = "Gilad Erdan: Israel making progress against Terror",
                     Summery = "Erdan is responsible for the fight against BDS in the Strategic Affairs Ministry, and the steps he has taken in that battle are controversial and unconventional.",
                     DateCreated = DateTime.Now,
                     HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_TopStoryMainImageFaceDetect/429944",
@@ -69,7 +69,7 @@ namespace NewsNow.Models
                 {
                     ArticleId = 3,
                     CategoryId = 1,
-                    Header = "Rusia: We were mislead by israel",
+                    Header = "Russia: We were mislead by israel",
                     Summery = "Maj. Gen. Igor Konashenkov, chief spokesman for the Russian Ministry of Defense, said that Israeli strikes in Syria put Russian forces there at risk.",
                     DateCreated = DateTime.Now,
                     HomeImageUrl = "https://images.haarets.co.il/image/upload/w_2184,h_1270,x_0,y_75,c_crop,g_north_west/w_857,h_482,q_auto,c_fill,f_auto/fl_any_format.preserve_transparency.progressive:none/v1537691679/1.6494059.1232180831.jpg",
@@ -113,7 +113,7 @@ namespace NewsNow.Models
                 {
                     ArticleId = 7,
                     CategoryId = 5,
-                    Header = "Livinng out the Baha'i: A journy to israel",
+                    Header = "Livinng out the Baha'i: A journy to Israel",
                     Summery = "More than a million people visit the gardens every year. Apart from being at the holiest site of his faith...",
                     DateCreated = DateTime.Now,
                     HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/429990",
