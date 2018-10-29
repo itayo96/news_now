@@ -5,7 +5,7 @@
 @model NewsNow.Models.Article
 
 <div class="card" style="width: 18rem; background-color: #f2eeee">
-    <a asp-controller="Articles" asp-action="Details" asp-route-id="@Html.DisplayFor(model => model.ArticleId)">
+    <a asp-controller="Articles" asp-action="Details" asp-route-id="@Model.ArticleId">
         <img data-toggle="tooltip"
              data-html="true"
              data-placement="bottom"
@@ -20,6 +20,6 @@
     <div class="card-body">
         <h5 class="card-title">@Html.DisplayFor(model => model.Header)</h5>
         <!--<p class="card-text">@Html.DisplayFor(model => model.Summery)</p>-->
-        <a class="btn btn-sm btn-outline-secondary" asp-controller="Articles" asp-action="Details" asp-route-id="@Html.DisplayFor(model => model.ArticleId)">Read more...</a>
+        <a class="btn btn-sm btn-outline-secondary" asp-controller="Articles" asp-action="Details" asp-route-id="@Model.ArticleId">Read more...</a>
     </div>
 </div>
