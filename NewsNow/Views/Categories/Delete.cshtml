@@ -8,12 +8,9 @@
 
 <div>
     <h3>Are you sure you want to delete this category?</h3>
-    <h4> To confirm the action, please select a new category for the articles with the deleted category</h4>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="CategoryId" />
-        @Html.AntiForgeryToken()
-        @Html.DropDownList("NewCategoryId", (SelectList)ViewBag.RemainingCategories, "Select Category", new { @class = "form-control" })
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

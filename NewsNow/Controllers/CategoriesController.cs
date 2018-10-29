@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,8 +27,8 @@ namespace NewsNow.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            List<Article> articles = await _context.Articles.ToListAsync();
-            ViewData["Articles"] = articles.Where(x => x.CategoryId == id).ToList();
+            ViewData["Articles"] = await _context.Articles
+                .Where(x => x.CategoryId == id).ToListAsync();
 
             if (id == null)
             {
@@ -133,26 +133,23 @@ namespace NewsNow.Controllers
                 return NotFound();
             }
 
-            ViewBag.RemainingCategories = 
-                new SelectList(_context.Categories.Where(x => x.CategoryId != categoryModel.CategoryId), "CategoryId", "Name");
-
             return View(categoryModel);
         }
 
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id, int NewCategoryId)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            // Change the category of the articles with the deleted category
+            // Remove articles of the selected category
             foreach (Article article in _context.Articles.Where(article => article.CategoryId == id))
             {
-                // TODO: Figure out why it seems like the articles are deleted rather than changing category
-                article.CategoryId = NewCategoryId;
+                _context.Articles.Remove(article);
             }
 
             var categoryModel = await _context.Categories.FindAsync(id);
             _context.Categories.Remove(categoryModel);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
