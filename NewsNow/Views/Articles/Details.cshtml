@@ -24,6 +24,8 @@
 <div class="row">
     <div class="col-md-8">
         <div class="col-12">
+
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             <div id="ArticleContent" class="border-bottom"></div>
         </div>
         <div class="col-12">
@@ -37,9 +39,9 @@
                         <textarea name="Content" class="form-control" rows="2" placeholder="And what do you think about this?"></textarea>
                     </div>
                     <div class="form-group form-group-sm">
-                        <input type="hidden" name="ArticleId" class="form-control" value="@Model.ArticleId"/>
+                        <input type="hidden" name="ArticleId" class="form-control" value="@Model.ArticleId" />
                     </div>
-                    <div class="form-group form-group-sm" >
+                    <div class="form-group form-group-sm">
                         <button type="button" class="btn btn-success btn-sm mr-2" data-toggle="modal" data-target="#commentModal">Post it!</button>
                         Remember: Keep it clean!
                     </div>
@@ -137,6 +139,22 @@
             <a href="#">Report</a>
         </div>
     </script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script async type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: "https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/463440424141459456",
+                type: "GET",
+                dataType: 'json',
+                success: function (result) {
+                    alert("ID231", result);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        });
+    </script>
 
     <script type="text/javascript">
 
@@ -153,7 +171,7 @@
         }
 
         var update_comments = function () {
-            get_comments(@Model.ArticleId).then(function (comments) {    
+            get_comments(@Model.ArticleId).then(function (comments) {
                 comments.forEach(comment => {
                     $("#commentTemplate").tmpl(comment).appendTo("#commentsList");
                 })
