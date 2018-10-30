@@ -1,91 +1,228 @@
-﻿@model IEnumerable<NewsNow.Models.Article>
-
+@model IEnumerable<NewsNow.Models.Article>
 @{
     ViewData["Title"] = "Index";
     ViewData["Tab"] = "Home";
 }
 
-<div class="nav-scroller py-1 mb-2">
-    <nav class="nav d-flex justify-content-between border rounded">
-        @foreach (var c in (Dictionary<Category, List<Article>>)ViewData["Categories"])
-        {
-            <a asp-controller="Categories" asp-action="Details" asp-route-id="@c.Key.CategoryId" class="p-2 text-muted">@c.Key.Name</a>
-        }
-    </nav>
-</div>
+<canvas id="LoadingCanvas" style="margin: auto; display: block"></canvas>
 
-@if (ViewData["MainArticle"] != null)
-{
-    <!--Main featured article-->
-    <div class="card flex-md-row mb-4 box-shadow h-md-250 home-main-article">
-        <div class="card-body d-flex flex-column align-items-start">
-            <strong class="d-inline-block mb-2 text-primary">
-                <partial name="_CategoryBadge" model="@((Category)ViewData["MainArticleCategory"])" />
-            </strong>
-            <h3 class="mb-0">
-                <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)" class="text-dark">@(((Article)ViewData["MainArticle"]).Header)</a>
-            </h3>
-            <div class="mb-1 text-muted">@(((Article)ViewData["MainArticle"]).DateCreated)</div>
-            <p class="card-text mb-auto">@(((Article)ViewData["MainArticle"]).Summery)</p>
-            <a class="btn btn-sm btn-outline-secondary" asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">Read more</a>
+<div id="HomePage">
+    <div class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex justify-content-between border rounded">
+            @foreach (var c in (Dictionary<Category, List<Article>>)ViewData["Categories"])
+            {
+                <a asp-controller="Categories" asp-action="Details" asp-route-id="@c.Key.CategoryId" class="p-2 text-muted">@c.Key.Name</a>
+            }
+        </nav>
+    </div>
+
+    @if (ViewData["MainArticle"] != null)
+    {
+        <!--Main featured article-->
+        <div class="card flex-md-row mb-4 box-shadow h-md-250 home-main-article">
+            <div class="card-body d-flex flex-column align-items-start">
+                <strong class="d-inline-block mb-2 text-primary">
+                    <partial name="_CategoryBadge" model="@((Category)ViewData["MainArticleCategory"])" />
+                </strong>
+                <h3 class="mb-0">
+                    <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)" class="text-dark">@(((Article)ViewData["MainArticle"]).Header)</a>
+                </h3>
+                <div class="mb-1 text-muted">@(((Article)ViewData["MainArticle"]).DateCreated)</div>
+                <p class="card-text mb-auto">@(((Article)ViewData["MainArticle"]).Summery)</p>
+                <a class="btn btn-sm btn-outline-secondary" asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">Read more</a>
+            </div>
+            <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">
+                <img class="card-img-right flex-auto d-none d-md-block" style="width: 550px; height: 350px;" src="@(((Article)ViewData["MainArticle"]).HomeImageUrl)" data-holder-rendered="true" />
+            </a>
         </div>
-        <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">
-            <img class="card-img-right flex-auto d-none d-md-block" style="width: 550px; height: 350px;" src="@(((Article)ViewData["MainArticle"]).HomeImageUrl)" data-holder-rendered="true" />
-        </a>
-    </div>
-}
+    }
 
+    <h3 class="pb-3 mb-4 font-italic border-bottom">Featured <small>The MUST READ articles</small></h3>
+    <div class="row mb-2">
+        <div class="col-md-10">
+            @foreach (var article in ((List<Article>)ViewData["Featured"]))
+            {
+                <div class="col-md-12">
+                    <partial name="_ArticleHorizontal" model="@article" />
+                </div>
+            }
+        </div>
 
-<h3 class="pb-3 mb-4 font-italic border-bottom">Featured <small>The MUST READ articles</small></h3>
-<div class="row mb-2">
-    <div class="col-md-10">
-        @foreach (var article in ((List<Article>)ViewData["Featured"]))
-        {
-            <div class="col-md-12">
-                <partial name="_ArticleHorizontal" model="@article" />
-            </div>
-        }
+        <div class="col-md-2">
+            <h3 class="pb-3 mb-4 font-italic border-bottom">Recent <small>(Hover over the images)</small></h3>
+            @foreach (Article ar in ((List<Article>)ViewData["Articles"]).Skip(4).Take(4)) // TODO: Order by date
+            {
+                <div class="card">
+                    <img src="@ar.HomeImageUrl" class="img-fluid img-thumbnail" data-toggle="tooltip" data-placement="right" data-html="true" title="<h4>@ar.Header</h4><p>@ar.Summery</p>" />
+                </div>
+            }
+        </div>
     </div>
-     
-    <div class="col-md-2">
-        <h3 class="pb-3 mb-4 font-italic border-bottom">Recent <small>(Hover over the images)</small></h3>
-        @foreach (Article ar in ((List<Article>)ViewData["Articles"]).Skip(4).Take(4)) // TODO: Order by date
-        {
-            <div class="card">
-                <img src="@ar.HomeImageUrl" class="img-fluid img-thumbnail" data-toggle="tooltip" data-placement="right" data-html="true" title="<h4>@ar.Header</h4><p>@ar.Summery</p>" />
-            </div>
-        }
-    </div>
+
+    @foreach (var c in (Dictionary<Category, List<Article>>)ViewData["Categories"])
+    {
+        var category = c.Key;
+
+        <br />
+        <h3 class="pb-3 mb-4 font-italic border-bottom">
+            <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.CategoryId" style="color: @category.HexColor !important;">
+                @category.Name <small class="text-dark">@category.Description</small>
+            </a>
+        </h3>
+
+        <div class="row">
+            @foreach (Article article in c.Value)
+            {
+                <div class="col-md-3">
+                    <partial name="_ArticleVertical" model="article" />
+                </div>
+            }
+        </div>
+    }
 </div>
-
-@foreach (var c in (Dictionary<Category, List<Article>>)ViewData["Categories"])
-{
-    var category = c.Key;
-
-    <br />
-    <h3 class="pb-3 mb-4 font-italic border-bottom">
-        <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.CategoryId" style="color: @category.HexColor !important;">
-            @category.Name <small class="text-dark">@category.Description</small>
-        </a>
-    </h3>
-
-    <div class="row">
-        @foreach (Article article in c.Value)
-        {
-            <div class="col-md-3">
-                <partial name="_ArticleVertical" model="article" />
-            </div>
-        }
-    </div>
-}
 
 @section Scripts
-{
-<script type="text/javascript">
+    {
+    <script type="text/javascript">
         $(document).ready(function () {
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             })
         })
-</script>
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        particle_no = 25;
+
+        window.requestAnimFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+
+        var canvas = document.getElementsByTagName("canvas")[0];
+        var ctx = canvas.getContext("2d");
+
+        var counter = 0;
+        var particles = [];
+        var w = 400,
+            h = 200;
+        canvas.width = w;
+        canvas.height = h;
+
+        function reset() {
+            ctx.fillStyle = "#f7f2f2";
+            ctx.fillRect(0, 0, w, h);
+
+            ctx.fillStyle = "#171814";
+            ctx.fillRect(25, 80, 350, 25);
+        }
+
+        function progressbar() {
+            this.widths = 0;
+            this.hue = 0;
+
+            this.draw = function () {
+                ctx.fillStyle = 'hsla(' + this.hue + ', 100%, 50%, 1)';
+                ctx.fillRect(25, 80, this.widths, 25);
+                var grad = ctx.createLinearGradient(0, 0, 0, 180);
+                grad.addColorStop(0, "transparent");
+                grad.addColorStop(1, "rgba(0,0,0,0.8)");
+                ctx.fillStyle = grad;
+                ctx.fillRect(25, 80, this.widths, 25);
+            }
+        }
+
+        function particle() {
+            this.x = 23 + bar.widths;
+            this.y = 82;
+
+            this.vx = 0.8 + Math.random() * 1;
+            this.v = Math.random() * 5;
+            this.g = 1 + Math.random() * 3;
+            this.down = false;
+
+            this.draw = function () {
+                ctx.fillStyle = 'hsla(' + (bar.hue + 0.3) + ', 100%, 40%, 1)';;
+                var size = Math.random() * 2;
+                ctx.fillRect(this.x, this.y, size, size);
+            }
+        }
+
+        bar = new progressbar();
+
+        function draw() {
+            reset();
+            counter++
+
+            bar.hue += 0.7;
+
+            bar.widths += 2;
+            if (bar.widths > 350) {
+                if (counter > 215) {
+                    reset();
+                    bar.hue = 0;
+                    bar.widths = 0;
+                    counter = 0;
+                    particles = [];
+                } else {
+                    bar.hue = 126;
+                    bar.widths = 351;
+                    bar.draw();
+                }
+            } else {
+                bar.draw();
+                for (var i = 0; i < particle_no; i += 10) {
+                    particles.push(new particle());
+                }
+            }
+            update();
+        }
+
+        function update() {
+            for (var i = 0; i < particles.length; i++) {
+                var p = particles[i];
+                p.x -= p.vx;
+                if (p.down == true) {
+                    p.g += 0.1;
+                    p.y += p.g;
+                } else {
+                    if (p.g < 0) {
+                        p.down = true;
+                        p.g += 0.1;
+                        p.y += p.g;
+                    } else {
+                        p.y -= p.g;
+                        p.g -= 0.1;
+                    }
+                }
+                p.draw();
+            }
+        }
+
+        function animloop() {
+            draw();
+            requestAnimFrame(animloop);
+        }
+
+        sleep = (milliseconds) => {
+            return new Promise(resolve => setTimeout(resolve, milliseconds))
+        }
+
+        $("#HomePage").hide();
+
+        animloop();
+
+        sleep(3000).then(() => {
+            $("#HomePage").show();
+            $("#LoadingCanvas").hide();
+        })
+    </script>
 }
