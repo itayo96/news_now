@@ -18,13 +18,15 @@
         <a asp-action="Edit" asp-route-id="@Model.ArticleId" class="btn btn-sm btn-outline-secondary">Edit</a>
         <a href="/" class="btn btn-sm btn-outline-secondary">Home</a>
     </div>
+
     <br />
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-screen-name="false" data-show-count="false">Tweet</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <br />
 </div>
 <div class="row">
     <div class="col-md-8">
-        <div class="col-12">
-
+        <div id="twitter-handle" class="col-12">
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             <div id="ArticleContent" class="border-bottom"></div>
         </div>
@@ -143,14 +145,13 @@
     <script async type="text/javascript">
         $(document).ready(function () {
             $.ajax({
-                url: "https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/463440424141459456",
                 type: "GET",
-                dataType: 'json',
-                success: function (result) {
-                    alert("ID231", result);
-                },
-                error: function (error) {
-                    console.log(error);
+                url: "https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/463440424141459456",
+                data: "https://twitter.com/Interior/status/463440424141459456",
+                dataType: 'jsonp',
+                crossDomain: true,
+                success: function (data) {
+                    $("#twitter-handle").append(data['html']);
                 }
             })
         });
