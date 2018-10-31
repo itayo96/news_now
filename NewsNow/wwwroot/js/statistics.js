@@ -24,38 +24,37 @@ var svg = d3.select("#statistics-graph").append("svg")
     .attr("class", "graph")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("assets/data.json",
-    function (error, data) {
 
-        for (var i in data) {
-            data[i].comments = parseInt(data[i].comments);
-        }
+function draw(data) {
+    x.domain(data.map(function (d) { return d.month + '/' + d.year; }));
+    y0.domain([0, d3.max(data, function (d) { return d.comments; })]);
 
-        x.domain(data.map(function (d) { return d.month + '/' + d.year; }));
-        y0.domain([0, d3.max(data, function (d) { return d.comments; })]);
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
 
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
+    svg.append("g")
+        .attr("class", "y axis axisLeft")
+        .attr("transform", "translate(0,0)")
+        .call(yAxisLeft)
+        .append("text")
+        .attr("y", 6)
+        .attr("dy", "-2em")
+        .style("text-anchor", "end")
+        .style("text-anchor", "end")
+        .text("Comments");
 
-        svg.append("g")
-            .attr("class", "y axis axisLeft")
-            .attr("transform", "translate(0,0)")
-            .call(yAxisLeft)
-            .append("text")
-            .attr("y", 6)
-            .attr("dy", "-2em")
-            .style("text-anchor", "end")
-            .style("text-anchor", "end")
-            .text("Comments");
+    bars = svg.selectAll(".bar").data(data).enter();
 
-        bars = svg.selectAll(".bar").data(data).enter();
+    bars.append("rect")
+        .attr("class", "bar1")
+        .attr("x", function (d) { return x(d.month + '/' + d.year) + x.rangeBand() / 4; })
+        .attr("width", x.rangeBand() / 2)
+        .attr("y", function (d) { return y0(d.comments); })
+        .attr("height", function (d, i, j) { return height - y0(d.comments); });
+}
 
-        bars.append("rect")
-            .attr("class", "bar1")
-            .attr("x", function (d) { return x(d.month + '/' + d.year) + x.rangeBand() / 4; })
-            .attr("width", x.rangeBand() / 2)
-            .attr("y", function (d) { return y0(d.comments); })
-            .attr("height", function (d, i, j) { return height - y0(d.comments); });
-    });
+d3.json('assets/comments-statistics.json', function(data) {
+    draw(data);
+});
