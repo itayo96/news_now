@@ -76,7 +76,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Header,Summery,Content,HomeImageUrl,CategoryId,Location")] Article articleModel)
+        public async Task<IActionResult> Create([Bind("Header,Summery,Content,HomeImageUrl,CategoryId,Location,IsShowMap")] Article articleModel)
         {
             if (ModelState.IsValid)
             {
@@ -111,7 +111,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,Header,Summery,Content,HomeImageUrl,CategoryId,Location")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,Header,Summery,Content,HomeImageUrl,CategoryId,Location,IsShowMap")] Article article)
         {
             if (id != article.ArticleId)
             {
@@ -129,6 +129,7 @@ namespace NewsNow.Controllers
                     _context.Entry(article).Property(x => x.HomeImageUrl).IsModified = true;
                     _context.Entry(article).Property(x => x.CategoryId).IsModified = true;
                     _context.Entry(article).Property(x => x.Location).IsModified = true;
+                    _context.Entry(article).Property(x => x.IsShowMap).IsModified = true;
 
                     await _context.SaveChangesAsync();
                 }
