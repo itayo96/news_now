@@ -4,9 +4,9 @@
     ViewData["Tab"] = "Home";
 }
 
-<canvas id="LoadingCanvas" style="margin: auto; display: block"></canvas>
+<canvas id="loading-canvas" style="margin: auto; display: block"></canvas>
 
-<div id="HomePage">
+<div id="home-page" style="display: none">
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between border rounded">
             @foreach (var c in (Dictionary<Category, List<Article>>)ViewData["Categories"])
@@ -216,13 +216,11 @@
             return new Promise(resolve => setTimeout(resolve, milliseconds))
         }
 
-        $("#HomePage").hide();
-
         animloop();
 
         sleep(3000).then(() => {
-            $("#HomePage").show();
-            $("#LoadingCanvas").hide();
+            $("#home-page").show();
+            $("#loading-canvas").hide();
         })
     </script>
 }
