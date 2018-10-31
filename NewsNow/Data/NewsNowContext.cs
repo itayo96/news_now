@@ -37,7 +37,6 @@ namespace NewsNow.Models
             .WithMany(b => b.Comments)
             .OnDelete(DeleteBehavior.Cascade);
 
-
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 1, Name = "World", Description = "World wide news", Color = System.Drawing.Color.MidnightBlue });
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 2, Name = "Politics", Description = "Debates and conflicts", Color = System.Drawing.Color.DarkMagenta });
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 3, Name = "Business", Description = "Trade, commerce and money", Color = System.Drawing.Color.DarkGreen });
