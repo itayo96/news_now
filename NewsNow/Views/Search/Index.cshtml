@@ -9,29 +9,39 @@
 {
     @Html.AntiForgeryToken()
 
-    @Html.DropDownList("CategoryId", (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control" })
-    @Html.TextBox("Header", "", new { @class = "form-control", @placeholder = "Title" })
-    @Html.TextBox("Summery", "", new { @class = "form-control", @placeholder = "Summery"})
-    @Html.TextBox("DateCreated", DateTime.Now, new { @type = "date", @class = "form-control" })
+<div class="row">
+    <div class="col-sm">
+        @Html.DropDownList("CategoryId", (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control" })
+    </div>
+    <div class="col-sm">
+        @Html.TextBox("Header", "", new { @class = "form-control", @placeholder = "Title" })
+    </div>
+    <div class="col-sm">
+        @Html.TextBox("Summery", "", new { @class = "form-control", @placeholder = "Summery" })
+    </div>
+    <div class="col-sm">
+        @Html.TextBox("DateCreated", DateTime.Now, new { @type = "date", @class = "form-control" })
+    </div>
     <input type="submit" value="Search" class="btn btn-primary" />
+</div>
 }
 
-<br />
-@if (Model != null && Model.Any())
-{
-    foreach (var item in Model)
-    {
-        <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.ArticleId">
-            <dd>
-                @Html.DisplayFor(model => item.Header)
-            </dd>
-        </a>
-    }
-}
+        <br />
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.ArticleId">
+                    <dd>
+                        @Html.DisplayFor(model => item.Header)
+                    </dd>
+                </a>
+            }
+        }
 
-@section Scripts
-    {
-    <script type="text/javascript">
+        @section Scripts
+            {
+            <script type="text/javascript">
 
-    </script>
-}
+            </script>
+        }
