@@ -48,7 +48,7 @@ namespace NewsNow.Models
                     CategoryId = 1,
                     Header = "Iran blames US and Saudi Arabia for terror attack",
                     Summery = "Iran blames the US and Saudi Arabia for military parade terror attack",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2018, 5, 1, 8, 30, 52),
                     HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/427101",
                     Location = "טהרן, אירן",
                     IsShowMap = true,
@@ -60,7 +60,7 @@ namespace NewsNow.Models
                     CategoryId = 2,
                     Header = "Gilad Erdan: Israel making progress against Terror",
                     Summery = "Erdan is responsible for the fight against BDS in the Strategic Affairs Ministry, and the steps he has taken in that battle are controversial and unconventional.",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2018, 8, 7, 5, 22, 23),
                     HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_TopStoryMainImageFaceDetect/429944",
                     Location = "תל אביב, ישראל",
                     Content = exampleContent
@@ -71,9 +71,10 @@ namespace NewsNow.Models
                     CategoryId = 1,
                     Header = "Russia: We were mislead by israel",
                     Summery = "Maj. Gen. Igor Konashenkov, chief spokesman for the Russian Ministry of Defense, said that Israeli strikes in Syria put Russian forces there at risk.",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2018, 3, 7, 2, 22, 23),
                     HomeImageUrl = "https://images.haarets.co.il/image/upload/w_2184,h_1270,x_0,y_75,c_crop,g_north_west/w_857,h_482,q_auto,c_fill,f_auto/fl_any_format.preserve_transparency.progressive:none/v1537691679/1.6494059.1232180831.jpg",
                     Location = "תל אביב, ישראל",
+                    IsShowMap = true,
                     Content = exampleContent
                 },
                 new Article()
@@ -82,7 +83,7 @@ namespace NewsNow.Models
                     CategoryId = 1,
                     Header = "Israel rejects russian claims: IAF did not hide behind russian plane",
                     Summery = "The IAF did not hide behind any plane and Israeli fighter jets were in Israeli airspace when the Syrians attacked the Russian plane",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2018, 10, 6, 11, 10, 2),
                     HomeImageUrl = "https://www.jpost.com/HttpHandlers/ShowImage.ashx?id=350908&w=898&h=628",
                     Location = "תל אביב, ישראל",
                     Content = exampleContent
@@ -93,7 +94,7 @@ namespace NewsNow.Models
                     CategoryId = 1,
                     Header = "U.S. Terror victomsm ask Trump: bar Abbas",
                     Summery = "The family members called the decision to allow Abbas’s entry to the US \"a slap in the face to every American who has suffered from terror.\"",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2017, 12, 11, 11, 10, 2),
                     HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/428957",
                     Location = "תל אביב, ישראל",
                     Content = exampleContent
@@ -104,7 +105,7 @@ namespace NewsNow.Models
                     CategoryId = 5,
                     Header = "Trails and Tribulations of Eurovision 2019, What to expect next?",
                     Summery = "For the next eight months, squabbles over politics, money and religion are bound to plague the upcoming Eurovision. But which arguments should be taken seriously?",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2017, 3, 8, 11, 10, 2),
                     HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/429094",
                     Location = "תל אביב, ישראל",
                     Content = exampleContent
@@ -115,7 +116,7 @@ namespace NewsNow.Models
                     CategoryId = 5,
                     Header = "Livinng out the Baha'i: A journy to Israel",
                     Summery = "More than a million people visit the gardens every year. Apart from being at the holiest site of his faith...",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2018, 10, 30, 11, 10, 2),
                     HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/429990",
                     Location = "תל אביב, ישראל",
                     Content = exampleContent
@@ -126,7 +127,7 @@ namespace NewsNow.Models
                     CategoryId = 5,
                     Header = "Highlights: Texas snaps 4-game skid to No. 17 TCU",
                     Summery = "Finland has produced more Formula One champions per capita than any other country in the world",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2018, 9, 6, 11, 10, 2),
                     HomeImageUrl = "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAAuljC.img?h=170&w=300&m=6&q=60&u=t&o=t&l=f&f=jpg&x=585&y=345",
                     Location = "תל אביב, ישראל",
                     Content = exampleContent
@@ -137,7 +138,7 @@ namespace NewsNow.Models
                     CategoryId = 6,
                     Header = "Russia is still attacking the US and trying to help Trump",
                     Summery = "Microsoft's revelation of yet another Russian operation assaulting democratic institutions -- including conservative think tanks that disagree with President Trump -- proves that Vladimir Putin is still trying to help Trump, writes Frida Ghitis.",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2018, 9, 7, 11, 10, 2),
                     HomeImageUrl = "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAAuljC.img?h=170&w=300&m=6&q=60&u=t&o=t&l=f&f=jpg&x=585&y=345",
                     Location = "תל אביב, ישראל",
                     Content = exampleContent
@@ -148,7 +149,7 @@ namespace NewsNow.Models
                     CategoryId = 3,
                     Header = "Comcast outbids 21st Century Fox for Sky",
                     Summery = "American cable giant Comcast lodged a winning bid of about $40 billion (£30.6 billion) for Sky following a rare, three round auction managed by UK's Takeover Panel",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2018, 8, 6, 11, 10, 2),
                     HomeImageUrl = "https://i.cdn.turner.com/money/dam/assets/180920115724-comcast-fox-sky-780x439.jpg",
                     Location = "תל אביב, ישראל",
                     Content = exampleContent
@@ -159,7 +160,7 @@ namespace NewsNow.Models
                     CategoryId = 3,
                     Header = "BMW vision's for a self-driving electric car",
                     Summery = "BMW has unveiled its vision for a self-driving electric crossover SUV and, if it actually ends up being a lot like the concept.",
-                    DateCreated = DateTime.Now,
+                    DateCreated = new DateTime(2018, 8, 6, 10, 10, 2),
                     HomeImageUrl = "https://i.cdn.turner.com/money/dam/assets/180913172656-bmw-inext-780x439.jpg",
                     Location = "תל אביב, ישראל",
                     Content = exampleContent
