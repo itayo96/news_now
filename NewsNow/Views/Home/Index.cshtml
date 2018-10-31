@@ -50,7 +50,7 @@
 
         <div class="col-md-2">
             <h3 class="pb-3 mb-4 font-italic border-bottom">Recent <small>(Hover over the images)</small></h3>
-            @foreach (Article ar in ((List<Article>)ViewData["Articles"]).Skip(4).Take(4)) // TODO: Order by date
+            @foreach (Article ar in ((List<Article>)ViewData["Recent"]))
             {
                 <div class="card">
                     <img src="@ar.HomeImageUrl" class="img-fluid img-thumbnail" data-toggle="tooltip" data-placement="right" data-html="true" title="<h4>@ar.Header</h4><p>@ar.Summery</p>" />

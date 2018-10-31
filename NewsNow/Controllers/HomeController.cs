@@ -27,13 +27,6 @@ namespace NewsNow.Controllers
                 categories.Add(c, await GetFeatured(c).ToListAsync());
             }
 
-            /*foreach (Article m in _context.Articles)
-            {
-                _context.Entry(m).Reference(p => p.Category).Load();
-                var x = m.Category.Name;
-            }*/
-
-            // TODO: Actually calculate the featured articles
             ViewData["Categories"] = categories;
 
             ViewData["MainArticle"] = null;
@@ -46,9 +39,11 @@ namespace NewsNow.Controllers
                 ViewData["MainArticleCategory"] = await _context.Categories
                     .FirstOrDefaultAsync(c => c.CategoryId == mainArticle.CategoryId);
             }
-            
-            ViewData["Featured"] = await _context.Articles.Skip(1).Take(2).ToListAsync();
+
+            // TODO: Actually calculate the featured articles
             ViewData["Articles"] = await _context.Articles.ToListAsync();
+            ViewData["Featured"] = await _context.Articles.Skip(1).Take(2).ToListAsync();
+            ViewData["Recent"] = await _context.Articles.OrderBy(x => x.DateCreated).Take(4).ToListAsync();
 
             return View();
         }
