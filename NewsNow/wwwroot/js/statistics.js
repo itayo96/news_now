@@ -55,6 +55,6 @@ function draw(data) {
         .attr("height", function (d, i, j) { return height - y0(d.comments); });
 }
 
-$.getJSON("/Statistics/CommentsStatistics", null, function (data) {
+$.getJSON("/Statistics/Comments", null, function (data) {
     draw(data);
 });

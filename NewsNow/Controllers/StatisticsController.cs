@@ -27,23 +27,17 @@ namespace NewsNow.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CommentsStatistics()
+        public async Task<IActionResult> Comments()
         {
-            string jsonData = null;
+            var monthlyComments = await _context.Comments.GroupBy(x => new { x.DatePosted.Year, x.DatePosted.Month }).ToListAsync();
 
-            using (StreamReader r = new StreamReader("wwwroot/assets/comments-statistics.json"))
-            {
-                jsonData = r.ReadToEnd();
-            }
+            var statistics = monthlyComments.Select(monthGroup => new {
+                year = monthGroup.First().DatePosted.Year,
+                month = monthGroup.First().DatePosted.Month,
+                comments = monthGroup.Count()
+            }).ToList();
 
-            dynamic deserializedJson = JsonConvert.DeserializeObject(jsonData);
-
-            if (deserializedJson == null)
-            {
-                return NotFound();
-            }
-
-            return Json(deserializedJson);
+            return Json(statistics);
         }
 
         //    // GET: Statistics/Details/5
