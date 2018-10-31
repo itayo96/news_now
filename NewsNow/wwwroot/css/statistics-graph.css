@@ -4,10 +4,6 @@
     text-align: center;
 }
 
-.y.axisRight text {
-    fill: orange;
-}
-
 .y.axisLeft text {
     fill: steelblue;
 }
@@ -21,10 +17,6 @@
 
 .bar1 {
     fill: steelblue;
-}
-
-.bar2 {
-    fill: orange;
 }
 
 .x.axis path {

@@ -27,8 +27,9 @@ var svg = d3.select("#statistics-graph").append("svg")
 d3.csv("assets/data.csv",
     type,
     function (error, data) {
-        x.domain(data.map(function (d) { return d.year; }));
-        y0.domain([0, d3.max(data, function (d) { return d.money; })]);
+
+        x.domain(data.map(function (d) { return d.month + '/' + d.year; }));
+        y0.domain([0, d3.max(data, function (d) { return d.comments; })]);
 
         svg.append("g")
             .attr("class", "x axis")
@@ -44,19 +45,19 @@ d3.csv("assets/data.csv",
             .attr("dy", "-2em")
             .style("text-anchor", "end")
             .style("text-anchor", "end")
-            .text("Dollars");
+            .text("Comments");
 
         bars = svg.selectAll(".bar").data(data).enter();
 
         bars.append("rect")
             .attr("class", "bar1")
-            .attr("x", function (d) { return x(d.year); })
-            .attr("width", x.rangeBand())
-            .attr("y", function (d) { return y0(d.money); })
-            .attr("height", function (d, i, j) { return height - y0(d.money); });
+            .attr("x", function (d) { return x(d.month + '/' + d.year) + x.rangeBand() / 4; })
+            .attr("width", x.rangeBand() / 2)
+            .attr("y", function (d) { return y0(d.comments); })
+            .attr("height", function (d, i, j) { return height - y0(d.comments); });
     });
 
 function type(d) {
-    d.money = +d.money;
+    d.comments = +d.comments;
     return d;
 }
