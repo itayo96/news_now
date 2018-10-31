@@ -5,43 +5,52 @@
 
 <h2>@ViewBag.Title</h2>
 
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" href="#articles" role="tab" data-toggle="tab">articles</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#comments" role="tab" data-toggle="tab">comments</a>
+    </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="articles">aaa</div>
+    <div role="tabpanel" class="tab-pane fade" id="comments">bbb</div>
+</div>
+
+<br/>
 @using (Html.BeginForm("Index", "Search", FormMethod.Get))
 {
     @Html.AntiForgeryToken()
 
-<div class="row">
-    <div class="col-sm">
-        @Html.DropDownList("CategoryId", (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control" })
+    <div class="row">
+        <div class="col-sm">
+            @Html.DropDownList("CategoryId", (SelectList) ViewBag.Categories, "Select Category", new {@class = "form-control"})
+        </div>
+        <div class="col-sm">
+            @Html.TextBox("Header", "", new {@class = "form-control", @placeholder = "Title"})
+        </div>
+        <div class="col-sm">
+            @Html.TextBox("Summery", "", new {@class = "form-control", @placeholder = "Summery"})
+        </div>
+        <div class="col-sm">
+            @Html.TextBox("DateCreated", DateTime.Now, new {@type = "date", @class = "form-control"})
+        </div>
+        <input type="submit" value="Search" class="btn btn-primary"/>
     </div>
-    <div class="col-sm">
-        @Html.TextBox("Header", "", new { @class = "form-control", @placeholder = "Title" })
-    </div>
-    <div class="col-sm">
-        @Html.TextBox("Summery", "", new { @class = "form-control", @placeholder = "Summery" })
-    </div>
-    <div class="col-sm">
-        @Html.TextBox("DateCreated", DateTime.Now, new { @type = "date", @class = "form-control" })
-    </div>
-    <input type="submit" value="Search" class="btn btn-primary" />
-</div>
 }
 
-        <br />
-        @if (Model != null && Model.Any())
-        {
-            foreach (var item in Model)
-            {
-                <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.ArticleId">
-                    <dd>
-                        @Html.DisplayFor(model => item.Header)
-                    </dd>
-                </a>
-            }
-        }
-
-        @section Scripts
-            {
-            <script type="text/javascript">
-
-            </script>
-        }
+<br/>
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.ArticleId">
+            <dd>
+                @Html.DisplayFor(model => item.Header)
+            </dd>
+        </a>
+    }
+}
