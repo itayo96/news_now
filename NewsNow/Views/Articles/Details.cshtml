@@ -148,12 +148,17 @@
 
         var post_comment = function () {
             var data = $("#newCommentForm").serializeArray()
-            new_comment(data[0].value, data[1].value, data[2].value)
+            new_comment(data[0].value, data[1].value, data[2].value).then(function () {
+                update_comments()
+            });
+
+            
             console.log(data)
         }
 
         var update_comments = function () {
             get_comments(@Model.ArticleId).then(function (comments) {
+                $("#commentsList").html("");
                 comments.forEach(comment => {
                     $("#commentTemplate").tmpl(comment).appendTo("#commentsList");
                 })
