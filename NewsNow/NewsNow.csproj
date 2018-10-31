@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\assets\data.tsv" />
+    <Content Remove="wwwroot\assets\data.csv" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\assets\data.tsv" />
+    <None Include="wwwroot\assets\data.csv" />
   </ItemGroup>
 
 </Project>
