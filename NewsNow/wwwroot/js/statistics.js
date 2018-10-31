@@ -24,9 +24,12 @@ var svg = d3.select("#statistics-graph").append("svg")
     .attr("class", "graph")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("assets/data.csv",
-    type,
+d3.json("assets/data.json",
     function (error, data) {
+
+        for (var i in data) {
+            data[i].comments = parseInt(data[i].comments);
+        }
 
         x.domain(data.map(function (d) { return d.month + '/' + d.year; }));
         y0.domain([0, d3.max(data, function (d) { return d.comments; })]);
@@ -56,8 +59,3 @@ d3.csv("assets/data.csv",
             .attr("y", function (d) { return y0(d.comments); })
             .attr("height", function (d, i, j) { return height - y0(d.comments); });
     });
-
-function type(d) {
-    d.comments = +d.comments;
-    return d;
-}
