@@ -160,7 +160,7 @@
 
             bar.hue += 0.7;
 
-            bar.widths += 2;
+            bar.widths += 6;
             if (bar.widths > 350) {
                 if (counter > 215) {
                     reset();
@@ -214,7 +214,7 @@
 
         animloop();
 
-        sleep(3000).then(() => {
+        sleep(1000).then(() => {
             $("#home-page").show();
             $("#loading-canvas").hide();
         })
