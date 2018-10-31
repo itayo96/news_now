@@ -4,9 +4,9 @@
     ViewData["Tab"] = "Home";
 }
 
-<canvas id="LoadingCanvas" style="margin: auto; display: block"></canvas>
+<canvas id="loading-canvas" style="margin: auto; display: block"></canvas>
 
-<div id="HomePage">
+<div id="home-page" style="display: none">
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between border rounded">
             @foreach (var c in (Dictionary<Category, List<Article>>)ViewData["Categories"])
@@ -50,7 +50,7 @@
 
         <div class="col-md-2">
             <h3 class="pb-3 mb-4 font-italic border-bottom">Recent <small>(Hover over the images)</small></h3>
-            @foreach (Article ar in ((List<Article>)ViewData["Articles"]).Skip(4).Take(4)) // TODO: Order by date
+            @foreach (Article ar in ((List<Article>)ViewData["Recent"]))
             {
                 <div class="card">
                     <img src="@ar.HomeImageUrl" class="img-fluid img-thumbnail" data-toggle="tooltip" data-placement="right" data-html="true" title="<h4>@ar.Header</h4><p>@ar.Summery</p>" />
@@ -89,10 +89,6 @@
                 $('[data-toggle="tooltip"]').tooltip()
             })
         })
-    </script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript">
 
         particle_no = 25;
 
@@ -216,13 +212,11 @@
             return new Promise(resolve => setTimeout(resolve, milliseconds))
         }
 
-        $("#HomePage").hide();
-
         animloop();
 
         sleep(3000).then(() => {
-            $("#HomePage").show();
-            $("#LoadingCanvas").hide();
+            $("#home-page").show();
+            $("#loading-canvas").hide();
         })
     </script>
 }
