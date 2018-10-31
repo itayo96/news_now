@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NewsNow.Models;
+using ML;
 
 namespace NewsNow.Controllers
 {
@@ -36,6 +37,8 @@ namespace NewsNow.Controllers
             {
                 return NotFound();
             }
+
+            MachineLearning.GetRelatedArticle(1);
 
             var article = await _context.Articles.Include(a => a.Category).FirstOrDefaultAsync(m => m.ArticleId == id);
 
