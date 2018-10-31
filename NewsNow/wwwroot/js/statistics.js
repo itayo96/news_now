@@ -17,7 +17,7 @@ var yAxisLeft = d3.svg.axis().scale(y0).ticks(4).orient("left");
 // create right yAxis
 var yAxisRight = d3.svg.axis().scale(y1).ticks(6).orient("right");
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#statistics-graph").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -46,33 +46,14 @@ d3.csv("assets/data.csv",
             .style("text-anchor", "end")
             .text("Dollars");
 
-        svg.append("g")
-            .attr("class", "y axis axisRight")
-            .attr("transform", "translate(" + (width) + ",0)")
-            .call(yAxisRight)
-            .append("text")
-            .attr("y", 6)
-            .attr("dy", "-2em")
-            .attr("dx", "2em")
-            .style("text-anchor", "end")
-            .text("#");
-
         bars = svg.selectAll(".bar").data(data).enter();
 
         bars.append("rect")
             .attr("class", "bar1")
             .attr("x", function (d) { return x(d.year); })
-            .attr("width", x.rangeBand() / 2)
+            .attr("width", x.rangeBand())
             .attr("y", function (d) { return y0(d.money); })
             .attr("height", function (d, i, j) { return height - y0(d.money); });
-
-        bars.append("rect")
-            .attr("class", "bar2")
-            .attr("x", function (d) { return x(d.year) + x.rangeBand() / 2; })
-            .attr("width", x.rangeBand() / 2)
-            .attr("y", function (d) { return y1(d.number); })
-            .attr("height", function (d, i, j) { return height - y1(d.number); });
-
     });
 
 function type(d) {

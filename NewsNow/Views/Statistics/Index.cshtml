@@ -5,41 +5,14 @@
     ViewData["Title"] = "Statistics";
 }
 
-<style>
-    body {
-        font: 10px sans-serif;
-    }
-
-    .y.axisRight text {
-        fill: orange;
-    }
-
-    .y.axisLeft text {
-        fill: steelblue;
-    }
-
-    .axis path,
-    .axis line {
-        fill: none;
-        stroke: #000;
-        shape-rendering: crispEdges;
-    }
-
-    .bar1 {
-        fill: steelblue;
-    }
-
-    .bar2 {
-        fill: orange;
-    }
-
-    .x.axis path {
-        display: none;
-    }
-</style>
+<head>
+    <link rel="stylesheet" href="~/css/statistics-graph.css">
+</head>
 
 <body>
-    <h2>Statistics</h2>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="js/statistics.js"></script>
+<h2>Statistics</h2>
+<div id="statistics-graph"></div>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="js/statistics.js"></script>
 </body>
