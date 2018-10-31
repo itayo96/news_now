@@ -36,7 +36,7 @@
             </a>
         </div>
     }
-
+ 
     <h3 class="pb-3 mb-4 font-italic border-bottom">Featured <small>The MUST READ articles</small></h3>
     <div class="row mb-2">
         <div class="col-md-10">
@@ -56,6 +56,13 @@
                     <img src="@ar.HomeImageUrl" class="img-fluid img-thumbnail" data-toggle="tooltip" data-placement="right" data-html="true" title="<h4>@ar.Header</h4><p>@ar.Summery</p>" />
                 </div>
             }
+
+            <div class="card">
+                <strong class="d-inline-block mb-2 text-primary">The weather today</strong>
+                <a href="https://www.accuweather.com/en/il/tel-aviv/215854/weather-forecast/215854" class="aw-widget-legal"></a>
+                <div id="awcc1540992229894" class="aw-widget-current" data-locationkey="" data-unit="c" data-language="en-us" data-useip="true" data-uid="awcc1540992229894"></div>
+                <script type="text/javascript" src="https://oap.accuweather.com/launch.js"></script>
+            </div>
         </div>
     </div>
 

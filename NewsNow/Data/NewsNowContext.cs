@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NewsNow.Models;
 
 namespace NewsNow.Models
 {
-    public class NewsNowContext : DbContext
+    public class NewsNowContext : IdentityDbContext<ApplicationUser>
     {
         public NewsNowContext(DbContextOptions<NewsNowContext> options)
             : base(options)
@@ -24,6 +25,8 @@ namespace NewsNow.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Article>()
             .HasOne(p => p.Category)
             .WithMany(b => b.Articles)
