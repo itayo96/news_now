@@ -44,8 +44,16 @@
                                 <span asp-validation-for="Location" class="text-danger"></span>
                             </div>
                         </th>
+                    </tr>
+                    <tr>
                         <th>
-                            <div id="myMap" style="width:300px; height:300px;"></div>
+                            <div id="myMap" style="height:300px;"></div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input type="checkbox" asp-for="IsShowMap" class="form-control" /> Show map in article?
+                            <span asp-validation-for="IsShowMap" class="text-danger"></span>
                         </th>
                     </tr>
                 </table>
