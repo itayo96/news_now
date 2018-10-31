@@ -4,7 +4,6 @@
     ViewData["Title"] = Model.Header;
 }
 
-
 <div class="page-header">
     <h1>@Html.DisplayFor(model => model.Header)</h1>
     <p>
@@ -26,10 +25,7 @@
 </div>
 <div class="row">
     <div class="col-md-8">
-        <div id="twitter-handle" class="col-12">
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-            <div id="ArticleContent" class="border-bottom"></div>
-        </div>
+        <div id="ArticleContent" class="border-bottom"></div>
         <div class="col-12">
             <h3>Comments</h3>
             <div class="border-bottom mb-2">
@@ -63,7 +59,6 @@
     </div>
     <div class="col-lg-4">
         <div class="bs-example" data-example-id="default-media">
-
             @if (Model.IsShowMap)
             {
                 <h3>Media</h3>
@@ -142,25 +137,13 @@
         </div>
     </script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script async type="text/javascript">
-        $(document).ready(function () {
-            $.ajax({
-                type: "GET",
-                url: "https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/463440424141459456",
-                data: "https://twitter.com/Interior/status/463440424141459456",
-                dataType: 'jsonp',
-                crossDomain: true,
-                success: function (data) {
-                    $("#twitter-handle").append(data['html']);
-                }
-            })
-        });
-    </script>
+    <script src="~/js/twitter.js"></script>
 
     <script type="text/javascript">
 
         $(document).ready(function () {
             $("#ArticleContent").html(markdown_to_html("@Model.Content"));
+            load_markdown_tweeter()
 
             update_comments()
         })
