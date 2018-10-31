@@ -28,7 +28,7 @@
                     <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)" class="text-dark">@(((Article)ViewData["MainArticle"]).Header)</a>
                 </h3>
                 <div class="mb-1 text-muted">@(((Article)ViewData["MainArticle"]).DateCreated)</div>
-                <p class="card-text mb-auto">@(((Article)ViewData["MainArticle"]).Summery)</p>
+                <p class="card-text mb-auto" style="column-count: 2; column-gap: 20px">@(((Article)ViewData["MainArticle"]).Summery)</p>
                 <a class="btn btn-sm btn-outline-secondary" asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">Read more</a>
             </div>
             <a asp-controller="Articles" asp-action="Details" asp-route-id="@(((Article)ViewData["MainArticle"]).ArticleId)">
