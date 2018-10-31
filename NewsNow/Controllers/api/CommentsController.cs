@@ -91,6 +91,8 @@ namespace NewsNow.Controllers
             }
 
             comment.Sequence = await _context.Comments.Where(c => c.ArticleId == comment.ArticleId).CountAsync() + 1;
+            comment.DatePosted = DateTime.Now;
+
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
 
