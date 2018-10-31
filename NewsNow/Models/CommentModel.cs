@@ -13,6 +13,8 @@ namespace NewsNow.Models
 
         public int Sequence { get; set; }
 
+        public DateTime DatePosted { get; set; }
+
         public int ArticleId { get; set; }
 
         public virtual Article Article{ get; set; }
