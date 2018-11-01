@@ -38,8 +38,6 @@ namespace NewsNow.Controllers
                 return NotFound();
             }
 
-            MachineLearning.GetRelatedArticle(1);
-
             var article = await _context.Articles.Include(a => a.Category).FirstOrDefaultAsync(m => m.ArticleId == id);
 
             if (article == null)
@@ -65,6 +63,51 @@ namespace NewsNow.Controllers
             }
 
             return Json(comments);
+        }
+
+        public ActionResult GetRelatedArticles(int id)
+        {
+            const int NUM_OF_RELATED_ARTICLES = 3;
+            var relatedArticles = new List<int>();
+            try
+            {
+                int mlRelatedArticle = MachineLearning.GetRelatedArticle(id);
+
+                if (mlRelatedArticle != id)
+                {
+                    relatedArticles.Add(mlRelatedArticle);
+                    
+                    // Try to find a related article to the related article
+                    int mlRelatedToRelatedArticle = MachineLearning.GetRelatedArticle(mlRelatedArticle);
+
+                    if (mlRelatedToRelatedArticle != mlRelatedArticle && mlRelatedToRelatedArticle != id)
+                    {
+                        relatedArticles.Add(mlRelatedToRelatedArticle);
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                // It's just mean that there is no data yet for this article
+            }
+
+            int articlesCount = _context.Articles.Count();
+            Random random = new Random();
+
+            // Fill the rest of the related articles with random articles, in order to
+            // have the option for diversity (and by that make better predictions in the future)
+            while (relatedArticles.Count() < NUM_OF_RELATED_ARTICLES)
+            {
+                int randomArticle = random.Next(1, articlesCount);
+
+                if (!relatedArticles.Contains(randomArticle))
+                {
+                    relatedArticles.Add(randomArticle);
+                }
+            }
+
+            return Json(relatedArticles);
         }
 
         // GET: Articles/Create
