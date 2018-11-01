@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using NewsNow.Models;
 using ML;
@@ -13,10 +14,12 @@ namespace NewsNow.Controllers
     public class ArticlesController : Controller
     {
         private readonly NewsNowContext _context;
+        private readonly IHostingEnvironment _env;
 
-        public ArticlesController(NewsNowContext context)
+        public ArticlesController(NewsNowContext context, IHostingEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: Articles
@@ -77,7 +80,7 @@ namespace NewsNow.Controllers
 
             try
             {
-                int mlRelatedArticle = MachineLearning.GetRelatedArticle(id.Value);
+                int mlRelatedArticle = MachineLearning.GetRelatedArticle(_env.WebRootPath, id.Value);
 
                 if (mlRelatedArticle != id.Value)
                 {
@@ -88,7 +91,7 @@ namespace NewsNow.Controllers
                         relatedArticles.Add(article);
 
                         // Try to find a related article to the related article
-                        int mlRelatedToRelatedArticle = MachineLearning.GetRelatedArticle(mlRelatedArticle);
+                        int mlRelatedToRelatedArticle = MachineLearning.GetRelatedArticle(_env.WebRootPath, mlRelatedArticle);
 
                         if (mlRelatedToRelatedArticle != mlRelatedArticle && mlRelatedToRelatedArticle != id.Value)
                         {
