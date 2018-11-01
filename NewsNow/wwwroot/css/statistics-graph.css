@@ -22,3 +22,8 @@
 .x.axis path {
     display: none;
 }
+
+.slice text {
+    font-size: 16pt;
+    font-family: Arial;
+}
