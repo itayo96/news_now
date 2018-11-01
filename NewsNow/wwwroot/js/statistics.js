@@ -64,16 +64,18 @@ $.getJSON("/Statistics/Comments", null, function (data) {
 
 // Pie Chart
 
-var w = 300,                        //width
+var w = 300,                            //width
     h = 300,                            //height
     r = 100,                            //radius
     color = d3.scale.category20c();     //builtin range of colors
 
-data = [{ "label": "one", "value": 20 },
-{ "label": "two", "value": 50 },
-{ "label": "three", "value": 30 }];
+data = [
+    { "label": "one", "value": 20 },
+    { "label": "two", "value": 50 },
+    { "label": "three", "value": 30 }
+];
 
-var vis = d3.select("body")
+var vis = d3.select("#pie-chart")
     .append("svg:svg")              //create the SVG element inside the <body>
     .data([data])                   //associate our data with the document
     .attr("width", w)           //set the width and height of our visualization (these will be attributes of the <svg> tag
