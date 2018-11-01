@@ -65,24 +65,40 @@ namespace NewsNow.Controllers
             return Json(comments);
         }
 
-        public ActionResult GetRelatedArticles(int id)
+        public async Task<IActionResult> GetRelatedArticles(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             const int NUM_OF_RELATED_ARTICLES = 3;
-            var relatedArticles = new List<int>();
+            var relatedArticles = new List<Article>();
+
             try
             {
-                int mlRelatedArticle = MachineLearning.GetRelatedArticle(id);
+                int mlRelatedArticle = MachineLearning.GetRelatedArticle(id.Value);
 
-                if (mlRelatedArticle != id)
+                if (mlRelatedArticle != id.Value)
                 {
-                    relatedArticles.Add(mlRelatedArticle);
-                    
-                    // Try to find a related article to the related article
-                    int mlRelatedToRelatedArticle = MachineLearning.GetRelatedArticle(mlRelatedArticle);
+                    var article = await _context.Articles.FirstAsync(c => c.ArticleId == mlRelatedArticle);
 
-                    if (mlRelatedToRelatedArticle != mlRelatedArticle && mlRelatedToRelatedArticle != id)
+                    if (article != null)
                     {
-                        relatedArticles.Add(mlRelatedToRelatedArticle);
+                        relatedArticles.Add(article);
+
+                        // Try to find a related article to the related article
+                        int mlRelatedToRelatedArticle = MachineLearning.GetRelatedArticle(mlRelatedArticle);
+
+                        if (mlRelatedToRelatedArticle != mlRelatedArticle && mlRelatedToRelatedArticle != id.Value)
+                        {
+                            article = await _context.Articles.FirstAsync(c => c.ArticleId == mlRelatedToRelatedArticle);
+
+                            if (article != null)
+                            {
+                                relatedArticles.Add(article);
+                            }
+                        }
                     }
                 }
 
@@ -99,11 +115,16 @@ namespace NewsNow.Controllers
             // have the option for diversity (and by that make better predictions in the future)
             while (relatedArticles.Count() < NUM_OF_RELATED_ARTICLES)
             {
-                int randomArticle = random.Next(1, articlesCount);
+                int randomArticleId = random.Next(1, articlesCount);
 
-                if (!relatedArticles.Contains(randomArticle))
+                if (!relatedArticles.Exists(c => c.ArticleId == randomArticleId))
                 {
-                    relatedArticles.Add(randomArticle);
+                    var randomArticle = await _context.Articles.FirstAsync(c => c.ArticleId == randomArticleId);
+
+                    if (randomArticle != null)
+                    {
+                        relatedArticles.Add(randomArticle);
+                    }
                 }
             }
 
