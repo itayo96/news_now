@@ -15,18 +15,18 @@ namespace ML
         public class RelatedArticleData
         {
             [Column("0")]
-            public int CurrentArticleId;
+            public float CurrentArticleId;
 
             [Column("1")]
             [ColumnName("Label")]
-            public int RelatedArticleId;
+            public float Label;
         }
 
         // IrisPrediction is the result returned from prediction operations
         public class RelatedArticlesPrediction
         {
             [ColumnName("PredictedLabel")]
-            public int PredictedRelatedArticle;
+            public float PredictedRelatedArticle;
         }
 
         public static int GetRelatedArticle(int ArticleId)
@@ -36,7 +36,7 @@ namespace ML
 
             // If working in Visual Studio, make sure the 'Copy to Output Directory'
             // property of iris-data.txt is set to 'Copy always'
-            string dataPath = "iris-data.txt";
+            string dataPath = "articles-transition-data.txt";
             var reader = new TextLoader(env,
                 new TextLoader.Arguments()
                 {
@@ -44,8 +44,8 @@ namespace ML
                     HasHeader = true,
                     Column = new[]
                     {
-                            new TextLoader.Column("CurrentArticleId", DataKind.Num, 0),
-                            new TextLoader.Column("RelatedArticleId", DataKind.Num, 1)
+                            new TextLoader.Column("CurrentArticleId", DataKind.R4, 0),
+                            new TextLoader.Column("Label", DataKind.R4, 1)
                     }
                 });
 
@@ -69,10 +69,10 @@ namespace ML
             var prediction = model.MakePredictionFunction<RelatedArticleData, RelatedArticlesPrediction>(env).Predict(
                 new RelatedArticleData()
                 {
-                    CurrentArticleId = ArticleId
+                    CurrentArticleId = (float)ArticleId
                 });
 
-            return prediction.PredictedRelatedArticle;
+            return (int)prediction.PredictedRelatedArticle;
         }
     }
 }
