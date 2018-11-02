@@ -15,8 +15,6 @@ namespace NewsNow.Models
         {
         }
 
-        public DbSet<NewsNow.Models.ExampleStatisticsModel> ExampleStatistics { get; set; }
-
         public DbSet<NewsNow.Models.Article> Articles { get; set; }
 
         public DbSet<NewsNow.Models.Category> Categories { get; set; }
