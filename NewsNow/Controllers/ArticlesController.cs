@@ -4,18 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using NewsNow.Models;
+using ML;
 
 namespace NewsNow.Controllers
 {
     public class ArticlesController : Controller
     {
         private readonly NewsNowContext _context;
+        private readonly IHostingEnvironment _env;
 
-        public ArticlesController(NewsNowContext context)
+        private readonly string _articlesTransitionDataPath;
+
+        public ArticlesController(NewsNowContext context, IHostingEnvironment env)
         {
             _context = context;
+            _env = env;
+
+            // If working in Visual Studio, make sure the 'Copy to Output Directory'
+            // property of the file is set to 'Copy always'
+            _articlesTransitionDataPath = System.IO.Path.Combine(_env.WebRootPath, "ml", "articles-transition-data.txt");
         }
 
         // GET: Articles
@@ -62,6 +72,72 @@ namespace NewsNow.Controllers
             }
 
             return Json(comments);
+        }
+
+        public async Task<IActionResult> GetRelatedArticles(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            const int NUM_OF_RELATED_ARTICLES = 3;
+            var relatedArticles = new List<Article>();
+
+            try
+            {
+                int mlRelatedArticle = MachineLearning.GetRelatedArticle(_articlesTransitionDataPath, id.Value);
+
+                if (mlRelatedArticle != id.Value)
+                {
+                    var article = await _context.Articles.FirstAsync(c => c.ArticleId == mlRelatedArticle);
+
+                    if (article != null)
+                    {
+                        relatedArticles.Add(article);
+
+                        // Try to find a related article to the related article
+                        int mlRelatedToRelatedArticle = MachineLearning.GetRelatedArticle(_articlesTransitionDataPath, mlRelatedArticle);
+
+                        if (mlRelatedToRelatedArticle != mlRelatedArticle && mlRelatedToRelatedArticle != id.Value)
+                        {
+                            article = await _context.Articles.FirstAsync(c => c.ArticleId == mlRelatedToRelatedArticle);
+
+                            if (article != null)
+                            {
+                                relatedArticles.Add(article);
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                // It's just mean that there is no data yet for this article
+            }
+
+            int articlesCount = _context.Articles.Count();
+            Random random = new Random();
+
+            // Fill the rest of the related articles with random articles, in order to
+            // have the option for diversity (and by that make better predictions in the future)
+            while (relatedArticles.Count() < NUM_OF_RELATED_ARTICLES)
+            {
+                int randomArticleId = random.Next(1, articlesCount);
+
+                if (randomArticleId != id.Value && !relatedArticles.Exists(c => c.ArticleId == randomArticleId))
+                {
+                    var randomArticle = await _context.Articles.FirstAsync(c => c.ArticleId == randomArticleId);
+
+                    if (randomArticle != null)
+                    {
+                        relatedArticles.Add(randomArticle);
+                    }
+                }
+            }
+
+            return Json(relatedArticles);
         }
 
         // GET: Articles/Create
@@ -175,6 +251,7 @@ namespace NewsNow.Controllers
             var article = await _context.Articles.FindAsync(id);
             _context.Articles.Remove(article);
             await _context.SaveChangesAsync();
+            // TODO: Remove all the lines in the articles-transition-data.txt (_articlesTransitionDataPath) that contains this article id
             return RedirectToAction(nameof(Index));
         }
 
