@@ -20,4 +20,10 @@
     <None Include="wwwroot\ml\articles-transition-data.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\ml\articles-transition-data.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

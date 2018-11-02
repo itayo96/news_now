@@ -16,10 +16,16 @@ namespace NewsNow.Controllers
         private readonly NewsNowContext _context;
         private readonly IHostingEnvironment _env;
 
+        private readonly string _articlesTransitionDataPath;
+
         public ArticlesController(NewsNowContext context, IHostingEnvironment env)
         {
             _context = context;
             _env = env;
+
+            // If working in Visual Studio, make sure the 'Copy to Output Directory'
+            // property of the file is set to 'Copy always'
+            _articlesTransitionDataPath = System.IO.Path.Combine(_env.WebRootPath, "ml", "articles-transition-data.txt");
         }
 
         // GET: Articles
@@ -80,7 +86,7 @@ namespace NewsNow.Controllers
 
             try
             {
-                int mlRelatedArticle = MachineLearning.GetRelatedArticle(_env.WebRootPath, id.Value);
+                int mlRelatedArticle = MachineLearning.GetRelatedArticle(_articlesTransitionDataPath, id.Value);
 
                 if (mlRelatedArticle != id.Value)
                 {
@@ -91,7 +97,7 @@ namespace NewsNow.Controllers
                         relatedArticles.Add(article);
 
                         // Try to find a related article to the related article
-                        int mlRelatedToRelatedArticle = MachineLearning.GetRelatedArticle(_env.WebRootPath, mlRelatedArticle);
+                        int mlRelatedToRelatedArticle = MachineLearning.GetRelatedArticle(_articlesTransitionDataPath, mlRelatedArticle);
 
                         if (mlRelatedToRelatedArticle != mlRelatedArticle && mlRelatedToRelatedArticle != id.Value)
                         {
@@ -120,7 +126,7 @@ namespace NewsNow.Controllers
             {
                 int randomArticleId = random.Next(1, articlesCount);
 
-                if (!relatedArticles.Exists(c => c.ArticleId == randomArticleId))
+                if (randomArticleId != id.Value && !relatedArticles.Exists(c => c.ArticleId == randomArticleId))
                 {
                     var randomArticle = await _context.Articles.FirstAsync(c => c.ArticleId == randomArticleId);
 
@@ -245,6 +251,7 @@ namespace NewsNow.Controllers
             var article = await _context.Articles.FindAsync(id);
             _context.Articles.Remove(article);
             await _context.SaveChangesAsync();
+            // TODO: Remove all the lines in the articles-transition-data.txt (_articlesTransitionDataPath) that contains this article id
             return RedirectToAction(nameof(Index));
         }
 

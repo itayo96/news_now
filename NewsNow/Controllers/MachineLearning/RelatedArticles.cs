@@ -29,14 +29,10 @@ namespace ML
             public float PredictedRelatedArticle;
         }
 
-        public static int GetRelatedArticle(string webRoot, int ArticleId)
+        public static int GetRelatedArticle(string dataPath, int ArticleId)
         {
             // STEP 2: Create an evironment  and load your data
-            var env = new LocalEnvironment();
-
-            // If working in Visual Studio, make sure the 'Copy to Output Directory'
-            // property of iris-data.txt is set to 'Copy always'
-            string dataPath = System.IO.Path.Combine(webRoot, "ml", "articles-transition-data.txt");
+            var env = new LocalEnvironment();            
 
             var reader = new TextLoader(env,
                 new TextLoader.Arguments()
