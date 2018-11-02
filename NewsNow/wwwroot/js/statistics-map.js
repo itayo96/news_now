@@ -5,7 +5,7 @@ function LoadMap() {
         credentials: "AglcOvofpKm1X-WOXDY3_Cr0bxdAbKzUid-4bp7Em3BxbNPK_kT-X8iWI4B1RF0H"
     });
 
-    var url = "/ArticlesLocation/GetLocations";
+    var url = "/Statistics/Locations";
     var locations = [];
     var count = 0;
     $.getJSON(url, null, function (data) {
@@ -30,5 +30,3 @@ function LoadMap() {
         });
     });
 }
-
-//LoadMap();

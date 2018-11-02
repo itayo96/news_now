@@ -59,5 +59,12 @@ namespace NewsNow.Controllers
 
             return Json(statistics);
         }
+
+        public async Task<IActionResult> Locations()
+        {
+            var locations = await _context.Articles.Select(article => article.Location).ToListAsync();
+
+            return Json(locations);
+        }
     }
 }

@@ -24,17 +24,6 @@ namespace NewsNow.Controllers
             return View();
         }
 
-        public ActionResult GetLocations()
-        {
-            var articles = _context.Articles.ToList();
-            var locations = new List<string>();
-
-            foreach (var article in articles)
-            {
-                locations.Add(article.Location);
-            }
-
-            return Json(locations);
-        }
+        
     }
 }
