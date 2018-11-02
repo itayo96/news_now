@@ -23,7 +23,6 @@ namespace NewsNow.Controllers
         // GET: Statistics
         public async Task<IActionResult> Index()
         {
-            //return View(await _context.ExampleStatistics.ToListAsync());
             return View();
         }
 
