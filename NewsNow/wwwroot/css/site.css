@@ -59,3 +59,15 @@ body {
     border-width: 5px;
     box-shadow: 0 1px 0 #cfcfcf;
 }
+
+.related-articles-list {
+    padding-left: .5em;
+}
+
+.related-articles-list .card {
+    width: 18rem;
+    background-color: #f2eeee;
+    margin-top: 1.1em;
+    margin-bottom: 1.1em;
+    border-bottom: 1px solid #e8e8e8;
+}

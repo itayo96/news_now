@@ -4,6 +4,7 @@
     ViewData["Title"] = Model.Header;
 }
 
+<!-------------------------------HEADER--------------------------------->
 <div class="page-header">
     <section>
         <h1>@Html.DisplayFor(model => model.Header)</h1>
@@ -29,9 +30,11 @@
 </div>
 <div class="row">
     <div class="col-md-8">
+        <!-------------------------------CONTENT--------------------------------->
         <section>
             <div id="ArticleContent" class="border-bottom"></div>
         </section>
+        <!-------------------------------COMMENTS--------------------------------->
         <section>
             <div class="col-12">
                 <h3>Comments</h3>
@@ -67,6 +70,7 @@
     </div>
     <div class="col-lg-4">
         <aside>
+            <!-------------------------------SIDEBAR--------------------------------->
             <div class="bs-example" data-example-id="default-media">
 
                 @if (Model.IsShowMap)
@@ -79,25 +83,17 @@
                     </div>
                 }
 
+                </br>
                 <h3>Related...</h3>
-                <div class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img alt="64x64" class="media-object" data-src="holder.js/64x64" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PCEtLQpTb3VyY2UgVVJMOiBob2xkZXIuanMvNjR4NjQKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNjYwMTQ4MTk1YiB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE2NjAxNDgxOTViIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxMy4xNzk2ODc1IiB5PSIzNi41Ij42NHg2NDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" data-holder-rendered="true" style="width: 64px; height: 64px;">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">Media heading</h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </div>
-                <div class="list-group" id="relatedArticlesList">
+                <div class="related-articles-list" id="relatedArticlesList">
+                    
                 </div>
             </div>
         </aside>
     </div>
 </div>
 
+<!-------------------------------COMMENTS--------------------------------->
 <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -140,16 +136,18 @@
             <a href="#">Report</a>
         </div>
     </script>
+
     <script id="relatedArticleTemplate" type="text/x-jQuery-tmpl">
-        <div class="media mb-1 border-bottom">
-            <div class="media-left">
-                <a href="#">
-                    <img alt="64x64" class="media-object" data-src="holder.js/64x64" src="${homeImageUrl}" data-holder-rendered="true" style="width: 64px; height: 64px;">
-                </a>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">${header}</h4>
-                ${summery}
+        <div class="card">
+            <a asp-controller="Articles" asp-action="Details" asp-route-id="@Model.ArticleId">
+                <img class="card-img-top"
+                     style="height: 180px; width: 100%; display: block;"
+                     src="${homeImageUrl}"
+                     data-holder-rendered="true">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">${header}</h5>
+                <a class="btn btn-sm btn-outline-secondary" asp-controller="Articles" asp-action="Details" href="/Articles/Details/${articleId}">Read more...</a>
             </div>
         </div>
     </script>
@@ -170,6 +168,10 @@
                     $("#twitter-handle").append(data['html']);
                 }
             })
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
 
             update_related_articles()
             update_comments()
@@ -233,9 +235,6 @@
                 });
             }
 
-            map.setView({
-                zoom: 10, center: new Microsoft.Maps.Location(32.18658, 34.872192)
-            });
         </script>
         <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=LoadMap" async defer></script>
     }
