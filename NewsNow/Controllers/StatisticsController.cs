@@ -32,8 +32,7 @@ namespace NewsNow.Controllers
             var monthlyComments = await _context.Comments.GroupBy(x => new { x.DatePosted.Year, x.DatePosted.Month }).ToListAsync();
 
             var statistics = monthlyComments.Select(monthGroup => new {
-                year = monthGroup.First().DatePosted.Year,
-                month = monthGroup.First().DatePosted.Month,
+                month = monthGroup.First().DatePosted.Month.ToString() + '/' + monthGroup.First().DatePosted.Year.ToString(),
                 comments = monthGroup.Count()
             }).ToList();
 
@@ -46,7 +45,8 @@ namespace NewsNow.Controllers
 
             var statistics = articlesPerCategory.Select(categoryArticles => new
             {
-                label = categoryArticles.First().CategoryId,
+                label = _context.Categories.FirstOrDefaultAsync(x => x.CategoryId == categoryArticles.First().CategoryId).Result.Name,
+                color = _context.Categories.FirstOrDefaultAsync(x => x.CategoryId == categoryArticles.First().CategoryId).Result.HexColor,
                 value = categoryArticles.Count()
             }).ToList();
 

@@ -28,7 +28,7 @@ var svg = d3.select("#statistics-graph").append("svg")
 
 
 function drawGraph(data) {
-    x.domain(data.map(function (d) { return d.month + '/' + d.year; }));
+    x.domain(data.map(function (d) { return d.month; }));
     y0.domain([0, d3.max(data, function (d) { return d.comments; })]);
 
     svg.append("g")
@@ -51,7 +51,7 @@ function drawGraph(data) {
 
     bars.append("rect")
         .attr("class", "bar1")
-        .attr("x", function (d) { return x(d.month + '/' + d.year) + x.rangeBand() / 4; })
+        .attr("x", function (d) { return x(d.month) + x.rangeBand() / 4; })
         .attr("width", x.rangeBand() / 2)
         .attr("y", function (d) { return y0(d.comments); })
         .attr("height", function (d, i, j) { return height - y0(d.comments); });
@@ -65,10 +65,9 @@ $.getJSON("/Statistics/Comments", null, function (data) {
 // Pie Chart
 
 function drawPieChart(data) {
-    var w = 300,                            //width
-        h = 300,                            //height
-        r = 100,                            //radius
-        color = d3.scale.category20c();     //builtin range of colors
+    var w = 450, //width
+        h = 450, //height
+        r = 180; //radius
 
     var vis = d3.select("#pie-chart")
         .append("svg:svg")              //create the SVG element inside the <body>
@@ -91,13 +90,13 @@ function drawPieChart(data) {
         .attr("class", "slice");    //allow us to style things in the slices (like text)
 
     arcs.append("svg:path")
-        .attr("fill", function (d, i) { return color(i); }) //set the color for each slice to be chosen from the color function defined above
+        .attr("fill", function (d, i) { return d.data.color; }) //set the color for each slice to be chosen from the color function defined above
         .attr("d", arc);                                    //this creates the actual SVG path using the associated data (pie) with the arc drawing function
 
     arcs.append("svg:text")                                     //add a label to each slice
         .attr("transform", function (d) {                    //set the label's origin to the center of the arc
             //we have to make sure to set these before calling arc.centroid
-            d.innerRadius = 0;
+            d.innerRadius = r / 4;
             d.outerRadius = r;
             return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
         })
