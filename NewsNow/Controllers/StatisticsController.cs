@@ -40,12 +40,20 @@ namespace NewsNow.Controllers
 
         public async Task<IActionResult> Articles()
         {
-            var articlesPerCategory = await _context.Articles.GroupBy(x => x.CategoryId).ToListAsync();
+            var articlesPerCategory = await _context.Articles.Join(_context.Categories,
+                category => category.CategoryId,
+                article => article.CategoryId,
+                (article, category) => new Article()
+                {
+                    ArticleId = article.ArticleId,
+                    CategoryId = category.CategoryId,
+                    Category = category
+                }).GroupBy(x => x.CategoryId).ToListAsync();
 
             var statistics = articlesPerCategory.Select(categoryArticles => new
             {
-                label = _context.Categories.FirstOrDefaultAsync(x => x.CategoryId == categoryArticles.First().CategoryId).Result.Name,
-                color = _context.Categories.FirstOrDefaultAsync(x => x.CategoryId == categoryArticles.First().CategoryId).Result.HexColor,
+                label = categoryArticles.First().Category.Name,
+                color = categoryArticles.First().Category.HexColor,
                 value = categoryArticles.Count()
             }).ToList();
 
