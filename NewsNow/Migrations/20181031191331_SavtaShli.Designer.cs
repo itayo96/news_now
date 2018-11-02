@@ -3,186 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsNow.Models;
 
 namespace NewsNow.Migrations
 {
     [DbContext(typeof(NewsNowContext))]
-    partial class NewsNowContextModelSnapshot : ModelSnapshot
+    [Migration("20181031191331_SavtaShli")]
+    partial class SavtaShli
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClaimType");
-
-                    b.Property<string>("ClaimValue");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClaimType");
-
-                    b.Property<string>("ClaimValue");
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("ProviderDisplayName");
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("RoleId");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("NewsNow.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-                });
 
             modelBuilder.Entity("NewsNow.Models.Article", b =>
                 {
@@ -260,7 +97,7 @@ All four attackers were killed during clashes with security forces, IRNA reporte
 
 *""The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,""* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.
 Khuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.
-", DateCreated = new DateTime(2018, 10, 1, 22, 27, 48, 441, DateTimeKind.Local), Header = "Gilad Erdan: Israel making progess against Terror", HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_TopStoryMainImageFaceDetect/429944", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "Erdan is responsible for the fight against BDS in the Strategic Affairs Ministry, and the steps he has taken in that battle are controversial and unconventional." },
+", DateCreated = new DateTime(2018, 8, 7, 5, 22, 23, 0, DateTimeKind.Unspecified), Header = "Gilad Erdan: Israel making progress against Terror", HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_TopStoryMainImageFaceDetect/429944", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "Erdan is responsible for the fight against BDS in the Strategic Affairs Ministry, and the steps he has taken in that battle are controversial and unconventional." },
                         new { ArticleId = 3, CategoryId = 1, Content = @"This is an example article with multiple paragraphs, **bolds**, *""quotes""* and others.
 
 
@@ -284,7 +121,7 @@ All four attackers were killed during clashes with security forces, IRNA reporte
 
 *""The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,""* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.
 Khuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.
-", DateCreated = new DateTime(2018, 10, 1, 22, 27, 48, 441, DateTimeKind.Local), Header = "Rusia: We were mislead by israel", HomeImageUrl = "https://images.haarets.co.il/image/upload/w_2184,h_1270,x_0,y_75,c_crop,g_north_west/w_857,h_482,q_auto,c_fill,f_auto/fl_any_format.preserve_transparency.progressive:none/v1537691679/1.6494059.1232180831.jpg", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "Maj. Gen. Igor Konashenkov, chief spokesman for the Russian Ministry of Defense, said that Israeli strikes in Syria put Russian forces there at risk." },
+", DateCreated = new DateTime(2018, 3, 7, 2, 22, 23, 0, DateTimeKind.Unspecified), Header = "Russia: We were mislead by israel", HomeImageUrl = "https://images.haarets.co.il/image/upload/w_2184,h_1270,x_0,y_75,c_crop,g_north_west/w_857,h_482,q_auto,c_fill,f_auto/fl_any_format.preserve_transparency.progressive:none/v1537691679/1.6494059.1232180831.jpg", IsShowMap = true, Location = "תל אביב, ישראל", Summery = "Maj. Gen. Igor Konashenkov, chief spokesman for the Russian Ministry of Defense, said that Israeli strikes in Syria put Russian forces there at risk." },
                         new { ArticleId = 4, CategoryId = 1, Content = @"This is an example article with multiple paragraphs, **bolds**, *""quotes""* and others.
 
 
@@ -308,7 +145,7 @@ All four attackers were killed during clashes with security forces, IRNA reporte
 
 *""The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,""* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.
 Khuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.
-", DateCreated = new DateTime(2018, 10, 1, 22, 27, 48, 441, DateTimeKind.Local), Header = "Israel rejects russian claims: IAF did not hide behind russian plane", HomeImageUrl = "https://www.jpost.com/HttpHandlers/ShowImage.ashx?id=350908&w=898&h=628", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "The IAF did not hide behind any plane and Israeli fighter jets were in Israeli airspace when the Syrians attacked the Russian plane" },
+", DateCreated = new DateTime(2018, 10, 6, 11, 10, 2, 0, DateTimeKind.Unspecified), Header = "Israel rejects russian claims: IAF did not hide behind russian plane", HomeImageUrl = "https://www.jpost.com/HttpHandlers/ShowImage.ashx?id=350908&w=898&h=628", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "The IAF did not hide behind any plane and Israeli fighter jets were in Israeli airspace when the Syrians attacked the Russian plane" },
                         new { ArticleId = 5, CategoryId = 1, Content = @"This is an example article with multiple paragraphs, **bolds**, *""quotes""* and others.
 
 
@@ -332,7 +169,7 @@ All four attackers were killed during clashes with security forces, IRNA reporte
 
 *""The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,""* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.
 Khuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.
-", DateCreated = new DateTime(2018, 10, 1, 22, 27, 48, 441, DateTimeKind.Local), Header = "U.S. Terror victomsm ask Trump: bar Abbas", HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/428957", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "The family members called the decision to allow Abbas’s entry to the US \"a slap in the face to every American who has suffered from terror.\"" },
+", DateCreated = new DateTime(2017, 12, 11, 11, 10, 2, 0, DateTimeKind.Unspecified), Header = "U.S. Terror victomsm ask Trump: bar Abbas", HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/428957", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "The family members called the decision to allow Abbas’s entry to the US \"a slap in the face to every American who has suffered from terror.\"" },
                         new { ArticleId = 6, CategoryId = 5, Content = @"This is an example article with multiple paragraphs, **bolds**, *""quotes""* and others.
 
 
@@ -356,7 +193,7 @@ All four attackers were killed during clashes with security forces, IRNA reporte
 
 *""The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,""* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.
 Khuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.
-", DateCreated = new DateTime(2018, 10, 1, 22, 27, 48, 441, DateTimeKind.Local), Header = "Trails and Tribulations of Eurovision 2019, What to expect next?", HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/429094", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "For the next eight months, squabbles over politics, money and religion are bound to plague the upcoming Eurovision. But which arguments should be taken seriously?" },
+", DateCreated = new DateTime(2017, 3, 8, 11, 10, 2, 0, DateTimeKind.Unspecified), Header = "Trails and Tribulations of Eurovision 2019, What to expect next?", HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/429094", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "For the next eight months, squabbles over politics, money and religion are bound to plague the upcoming Eurovision. But which arguments should be taken seriously?" },
                         new { ArticleId = 7, CategoryId = 5, Content = @"This is an example article with multiple paragraphs, **bolds**, *""quotes""* and others.
 
 
@@ -380,7 +217,7 @@ All four attackers were killed during clashes with security forces, IRNA reporte
 
 *""The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,""* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.
 Khuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.
-", DateCreated = new DateTime(2018, 10, 1, 22, 27, 48, 441, DateTimeKind.Local), Header = "Livinng out the Baha'i: A journy to israel", HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/429990", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "More than a million people visit the gardens every year. Apart from being at the holiest site of his faith..." },
+", DateCreated = new DateTime(2018, 10, 30, 11, 10, 2, 0, DateTimeKind.Unspecified), Header = "Livinng out the Baha'i: A journy to Israel", HomeImageUrl = "https://images.jpost.com/image/upload/f_auto,fl_lossy/t_Article2016_ControlFaceDetect/429990", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "More than a million people visit the gardens every year. Apart from being at the holiest site of his faith..." },
                         new { ArticleId = 8, CategoryId = 5, Content = @"This is an example article with multiple paragraphs, **bolds**, *""quotes""* and others.
 
 
@@ -404,7 +241,7 @@ All four attackers were killed during clashes with security forces, IRNA reporte
 
 *""The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,""* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.
 Khuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.
-", DateCreated = new DateTime(2018, 10, 1, 22, 27, 48, 441, DateTimeKind.Local), Header = "Highlights: Texas snaps 4-game skid to No. 17 TCU", HomeImageUrl = "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAAuljC.img?h=170&w=300&m=6&q=60&u=t&o=t&l=f&f=jpg&x=585&y=345", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "Finland has produced more Formula One champions per capita than any other country in the world" },
+", DateCreated = new DateTime(2018, 9, 6, 11, 10, 2, 0, DateTimeKind.Unspecified), Header = "Highlights: Texas snaps 4-game skid to No. 17 TCU", HomeImageUrl = "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAAuljC.img?h=170&w=300&m=6&q=60&u=t&o=t&l=f&f=jpg&x=585&y=345", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "Finland has produced more Formula One champions per capita than any other country in the world" },
                         new { ArticleId = 9, CategoryId = 6, Content = @"This is an example article with multiple paragraphs, **bolds**, *""quotes""* and others.
 
 
@@ -428,7 +265,7 @@ All four attackers were killed during clashes with security forces, IRNA reporte
 
 *""The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,""* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.
 Khuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.
-", DateCreated = new DateTime(2018, 10, 1, 22, 27, 48, 441, DateTimeKind.Local), Header = "Russia is still attacking the US and trying to help Trump", HomeImageUrl = "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAAuljC.img?h=170&w=300&m=6&q=60&u=t&o=t&l=f&f=jpg&x=585&y=345", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "Microsoft's revelation of yet another Russian operation assaulting democratic institutions -- including conservative think tanks that disagree with President Trump -- proves that Vladimir Putin is still trying to help Trump, writes Frida Ghitis." },
+", DateCreated = new DateTime(2018, 9, 7, 11, 10, 2, 0, DateTimeKind.Unspecified), Header = "Russia is still attacking the US and trying to help Trump", HomeImageUrl = "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAAuljC.img?h=170&w=300&m=6&q=60&u=t&o=t&l=f&f=jpg&x=585&y=345", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "Microsoft's revelation of yet another Russian operation assaulting democratic institutions -- including conservative think tanks that disagree with President Trump -- proves that Vladimir Putin is still trying to help Trump, writes Frida Ghitis." },
                         new { ArticleId = 10, CategoryId = 3, Content = @"This is an example article with multiple paragraphs, **bolds**, *""quotes""* and others.
 
 
@@ -452,7 +289,7 @@ All four attackers were killed during clashes with security forces, IRNA reporte
 
 *""The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,""* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.
 Khuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.
-", DateCreated = new DateTime(2018, 10, 1, 22, 27, 48, 441, DateTimeKind.Local), Header = "Comcast outbids 21st Century Fox for Sky", HomeImageUrl = "https://i.cdn.turner.com/money/dam/assets/180920115724-comcast-fox-sky-780x439.jpg", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "American cable giant Comcast lodged a winning bid of about $40 billion (£30.6 billion) for Sky following a rare, three round auction managed by UK's Takeover Panel" },
+", DateCreated = new DateTime(2018, 8, 6, 11, 10, 2, 0, DateTimeKind.Unspecified), Header = "Comcast outbids 21st Century Fox for Sky", HomeImageUrl = "https://i.cdn.turner.com/money/dam/assets/180920115724-comcast-fox-sky-780x439.jpg", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "American cable giant Comcast lodged a winning bid of about $40 billion (£30.6 billion) for Sky following a rare, three round auction managed by UK's Takeover Panel" },
                         new { ArticleId = 11, CategoryId = 3, Content = @"This is an example article with multiple paragraphs, **bolds**, *""quotes""* and others.
 
 
@@ -476,7 +313,7 @@ All four attackers were killed during clashes with security forces, IRNA reporte
 
 *""The terrorists disguised as Islamic Revolution Guards Corps and Basij (volunteer) forces opened fire to the authority and people from behind the stand during the parade,""* said Gholam-Reza Shariati, governor of Khuzestan province, according to IRNA.
 Khuzestan is a province that borders Iraq and has a large ethnic Arab community, many of them Sunni. It was a major battleground during the Iran-Iraq War that killed half a million soldiers in the '80s.
-", DateCreated = new DateTime(2018, 10, 1, 22, 27, 48, 441, DateTimeKind.Local), Header = "BMW vision's for a self-driving electric car", HomeImageUrl = "https://i.cdn.turner.com/money/dam/assets/180913172656-bmw-inext-780x439.jpg", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "BMW has unveiled its vision for a self-driving electric crossover SUV and, if it actually ends up being a lot like the concept." }
+", DateCreated = new DateTime(2018, 8, 6, 10, 10, 2, 0, DateTimeKind.Unspecified), Header = "BMW vision's for a self-driving electric car", HomeImageUrl = "https://i.cdn.turner.com/money/dam/assets/180913172656-bmw-inext-780x439.jpg", IsShowMap = false, Location = "תל אביב, ישראל", Summery = "BMW has unveiled its vision for a self-driving electric crossover SUV and, if it actually ends up being a lot like the concept." }
                     );
                 });
 
@@ -529,9 +366,9 @@ Khuzestan is a province that borders Iraq and has a large ethnic Arab community,
                     b.ToTable("Comments");
 
                     b.HasData(
-                        new { CommentId = 1, ArticleId = 1, Author = "The one who knows", Content = "Example content for an example comment", Sequence = 1 },
-                        new { CommentId = 2, ArticleId = 1, Author = "Voldemort", Content = "Multi line comment!\nI think this is an example comment", Sequence = 2 },
-                        new { CommentId = 3, ArticleId = 1, Author = "Jimmi", Content = "Example content for an example comment", Sequence = 3 }
+                        new { CommentId = 1, ArticleId = 1, Author = "The one who knows", Content = "Example content for an example comment", DatePosted = new DateTime(2018, 8, 2, 8, 10, 0, 0, DateTimeKind.Unspecified), Sequence = 1 },
+                        new { CommentId = 2, ArticleId = 1, Author = "Voldemort", Content = "Multi line comment! I think this is an example comment", DatePosted = new DateTime(2018, 8, 16, 9, 10, 0, 0, DateTimeKind.Unspecified), Sequence = 2 },
+                        new { CommentId = 3, ArticleId = 1, Author = "Jimmi", Content = "Example content for an example comment", DatePosted = new DateTime(2018, 9, 2, 8, 0, 15, 0, DateTimeKind.Unspecified), Sequence = 3 }
                     );
                 });
 
@@ -548,51 +385,6 @@ Khuzestan is a province that borders Iraq and has a large ethnic Arab community,
                     b.HasKey("ID");
 
                     b.ToTable("ExampleStatistics");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("NewsNow.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("NewsNow.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("NewsNow.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("NewsNow.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("NewsNow.Models.Article", b =>
