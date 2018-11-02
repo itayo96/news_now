@@ -1,4 +1,11 @@
-﻿@model NewsNow.Models.Article
+﻿@using Microsoft.AspNetCore.Identity
+@using NewsNow.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@model NewsNow.Models.Article
 
 @{
     ViewData["Title"] = Model.Header;
@@ -19,7 +26,12 @@
         <div class="btn-group" role="group" aria-label="...">
             <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button btn btn-sm" data-size="large" data-show-screen-name="false" data-show-count="false">Tweet</a>
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-            <a asp-action="Edit" asp-route-id="@Model.ArticleId" class="btn btn-sm btn-outline-secondary">Edit</a>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.ArticleId" class="btn btn-sm btn-outline-secondary">Edit</a>
+            }
+
             <a href="/" class="btn btn-sm btn-outline-secondary">Home</a>
         </div>
 
@@ -82,14 +94,14 @@
 
                 @if (Model.IsShowMap)
                 {
-                <div class="pb-3 border-bottom">
-                    <h3>Location:<span class="badge badge-secondary">@Model.Location</span></h3>
-                    <div class="media">
-                        <div class=" media-left">
-                            <div id="articleMap" class="img-thumbnail" style="width: 350px; height: 300px;"></div>
+                    <div class="pb-3 border-bottom">
+                        <h3>Location:<span class="badge badge-secondary">@Model.Location</span></h3>
+                        <div class="media">
+                            <div class=" media-left">
+                                <div id="articleMap" class="img-thumbnail" style="width: 350px; height: 300px;"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
 
                 <div class="mt-2">
@@ -114,8 +126,6 @@
             </div>
             <div class="modal-body">
                 Are you sure you want to post this comment?
-
-                <small>The comment will be posted as soon as possible, After a brief check</small>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -142,7 +152,11 @@
                 <small>${author}</small>
                 <p>${content}</p>
             </div>
-            <a href="#">Report</a>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <button class="btn btn-danger" onclick="delete_comment(${commentId})">X</button>
+            }
+            
         </div>
     </script>
 
@@ -210,6 +224,7 @@
                 $("#commentsList").html("");
                 comments.forEach(comment => {
                     $("#commentTemplate").tmpl(comment).appendTo("#commentsList");
+                    console.log(comment)
                 })
                 $("#commentsCountLabel").html(comments.length + " Comments")
             })

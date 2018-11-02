@@ -6,6 +6,20 @@
     })
 }
 
+var delete_comment = function (id) {
+    return new Promise(resolve => {
+        $.ajax({
+            url: "/api/Comments/" + id,
+            type: "DELETE",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function () {
+                resolve()
+            }
+        })
+    })
+}
+
 var new_comment = function (author, content, article_id) {
     console.log(author)
     console.log(content)
