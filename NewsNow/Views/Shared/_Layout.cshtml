@@ -21,24 +21,8 @@
     </environment>
 </head>
 <body>
+    @Html.Partial("_HeaderPartial")
     <div class="container">
-        <header class="blog-header py-3">
-            <div class="row flex-nowrap justify-content-between align-items-center">
-                <div class="col-4 pt-1">
-                    @Html.Partial("_LoginPartial")
-                </div>
-                <div class="col-4 text-center">
-                    <a class="blog-header-logo text-dark" href="@Url.Action("Index", "Home")"><img src="~/images/NewsNowLogoBlack_300x65.png.png" class="animate-logo" /></a>
-                </div>
-                <div class="col-4 justify-content-end align-items-center">
-                    <a href="https://twitter.com/mideastbeasties?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-screen-name="false" data-dnt="true" data-show-count="false">Follow Us</a>
-                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    <a class="text-muted" asp-controller="Search" asp-action="Index">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
-                    </a>
-                </div>
-            </div>
-        </header>
         <!--
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">

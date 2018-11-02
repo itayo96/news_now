@@ -10,7 +10,7 @@
         <p class="card-text mb-auto">@Html.DisplayFor(model => model.Summery)</p>
         <a class="btn btn-sm btn-outline-secondary" asp-controller="Articles" asp-action="Details" asp-route-id="@Model.ArticleId">Read more...</a>
     </div>
-    <a asp-controller="Articles" asp-action="Details" asp-route-id="@Model.ArticleId">
+    <a asp-controller="Articles" asp-action="Details" asp-route-id="@Model.ArticleId" class="bg-dark">
         <img class="card-img-right flex-auto d-none d-lg-block" style="width: 400px; height: 250px;" src="@Html.DisplayFor(model => model.HomeImageUrl)">
     </a>
 </div>

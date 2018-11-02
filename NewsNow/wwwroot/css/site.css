@@ -1,9 +1,8 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
 body {
-    padding-top: 10px;
     padding-bottom: 10px;
-    background-color: #f7f2f2;
+    background-color: #fafaf7;
     font-family: 'Alef', sans-serif;
 }
 
@@ -46,7 +45,7 @@ body {
 
 .animate-logo {
     height: 0;
-    transition: height 2s ease-in;
+    transition: height 1s ease-in;
 }
 .form-login {
     background-color: #EDEDED;

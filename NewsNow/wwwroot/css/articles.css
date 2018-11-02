@@ -6,15 +6,20 @@
 }
 
 .home-main-article {
-    background-color: #Fff5ef;
+    background-color: #404040;
+    color:lightgray !important;
 }
 
 .home-main-article > div > strong {
-    color: darkred !important;
+    color: aliceblue !important;
+}
+
+.home-main-article > div > a3 {
+    color: aliceblue !important;
 }
 
 .home-main-article > div > a {
-    color: darkred !important;
+color: aliceblue !important;
 }
 
 .comment-number-container {
