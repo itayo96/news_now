@@ -41,6 +41,11 @@
     </a>
 </div>
 
+<div id="adblocker-warning">
+    Our website is made possible by displaying online advertisements to our visitors.<br>
+    Disable your ad blocker in order to see the content of this article.
+</div>
+
 <div class="row">
     <div class="col-md-8">
         <!-------------------------------CONTENT--------------------------------->
@@ -204,22 +209,33 @@
         </div>
     </script>
 
+    <script src="~/js/ads.js" type="text/javascript"></script>
+
     <!-------------------------------SCRIPTS--------------------------------->
     <script async type="text/javascript">
         $(document).ready(function () {
-            $("#ArticleContent").html(markdown_to_html("@Model.Content"));
-            load_markdown_tweeter()
+            // Check for adblock
+            if (!document.getElementById('nlBmUzbdXSaY')) {
+                document.getElementById('adblocker-warning').style.display = 'block';
+            }
+            else {
 
-            $.ajax({
-                type: "GET",
-                url: "https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/463440424141459456",
-                data: "https://twitter.com/Interior/status/463440424141459456",
-                dataType: 'jsonp',
-                crossDomain: true,
-                success: function (data) {
-                    $("#twitter-handle").append(data['html']);
-                }
-            })
+                $("#ArticleContent").html(markdown_to_html("@Model.Content"));
+
+
+                load_markdown_tweeter()
+
+                $.ajax({
+                    type: "GET",
+                    url: "https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/463440424141459456",
+                    data: "https://twitter.com/Interior/status/463440424141459456",
+                    dataType: 'jsonp',
+                    crossDomain: true,
+                    success: function (data) {
+                        $("#twitter-handle").append(data['html']);
+                    }
+                })
+            }
 
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip();
