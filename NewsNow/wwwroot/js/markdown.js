@@ -66,7 +66,7 @@ var load_tweet = function (obj) {
     $.ajax({
         type: "GET",
         url: "https://publish.twitter.com/oembed?url=" + obj.attr("tweeter-url"),
-        data: "https://twitter.com/Interior/status/463440424141459456",
+        data: obj.attr("tweeter-url"),
         dataType: 'jsonp',
         crossDomain: true,
         success: function (data) {
