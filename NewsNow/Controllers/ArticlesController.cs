@@ -54,6 +54,11 @@ namespace NewsNow.Controllers
             return View(article);
         }
 
+        public async Task<IActionResult> MoveRelated(int? id)
+        {
+            return RedirectToAction(nameof(Details), new {id = id});
+        }
+
         public async Task<IActionResult> Comments(int? id)
         {
             if (id == null)
