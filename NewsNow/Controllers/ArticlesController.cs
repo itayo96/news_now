@@ -184,6 +184,7 @@ namespace NewsNow.Controllers
         {
             if (ModelState.IsValid)
             {
+                articleModel.DateCreated = DateTime.Now;
                 _context.Add(articleModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
