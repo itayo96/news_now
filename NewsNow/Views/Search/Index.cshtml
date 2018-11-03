@@ -1,3 +1,8 @@
+@using Microsoft.AspNetCore.Identity
+@using NewsNow.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+
 @model Tuple<IEnumerable<Article>, IEnumerable<Comment>>
 @{
     ViewBag.Title = "Search";
@@ -77,7 +82,14 @@
                 <small>${author}</small>
                 <p>${content}</p>
             </div>
-            <p><a href="/Articles/Details/${articleId}">Go to article </a> | <a href="#"> Report</a></p>
+
+            <a class="btn btn-success" href="/Articles/Details/${articleId}">Go</a>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <button class="btn btn-danger" onclick="_delete_comment(${commentId})">X</button>
+            }
+
         </div>
     </script>
 
@@ -110,5 +122,10 @@
             }
         }
 
+        var _delete_comment = function (id) {
+            delete_comment(id).then(function () {
+                update_searched_results('comments');
+            })
+        }
     </script>
 }
