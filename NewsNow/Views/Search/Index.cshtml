@@ -1,4 +1,4 @@
-@model IEnumerable<Article>
+@model Tuple<IEnumerable<Article>, IEnumerable<Comment>>
 @{
     ViewBag.Title = "Search";
 }
@@ -7,7 +7,7 @@
 
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" href="#articles" role="tab" data-toggle="tab">articles</a>
+        <a id="#active-tab" class="nav-link" href="#articles" role="tab" data-toggle="tab">articles</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#comments" role="tab" data-toggle="tab">comments</a>
@@ -16,41 +16,74 @@
 
 <!-- Tab panes -->
 <div class="tab-content">
-    <div role="tabpanel" class="tab-pane fade in active" id="articles">aaa</div>
-    <div role="tabpanel" class="tab-pane fade" id="comments">bbb</div>
+    <div role="tabpanel" class="tab-pane fade" id="articles">
+        <br />
+        @using (Html.BeginForm("Index", "Search", FormMethod.Get))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-sm">
+                    @Html.DropDownList("CategoryId", (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control" })
+                </div>
+                <div class="col-sm">
+                    @Html.TextBox("Header", "", new { @class = "form-control", @placeholder = "Title" })
+                </div>
+                <div class="col-sm">
+                    @Html.TextBox("Summery", "", new { @class = "form-control", @placeholder = "Summery" })
+                </div>
+                <div class="col-sm">
+                    @Html.TextBox("DateCreated", DateTime.Now, new { @type = "date", @class = "form-control" })
+                </div>
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        }
+
+        <br />
+        @if (Model != null && Model.Item1 != null && Model.Item1.Any())
+        {
+            foreach (var item in Model.Item1)
+            {
+                <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.ArticleId">
+                    <dd>
+                        @Html.DisplayFor(model => item.Header)
+                    </dd>
+                </a>
+            }
+        }
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="comments">
+
+        <br />
+        @using (Html.BeginForm("Index", "Search", FormMethod.Get))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-sm">
+                    @Html.TextBox("Author", "", new { @class = "form-control", @placeholder = "Author" })
+                </div>
+                <div class="col-sm">
+                    @Html.TextBox("Content", "", new { @class = "form-control", @placeholder = "Content" })
+                </div>
+                <div class="col-sm">
+                    @Html.TextBox("ArticleId", "", new { @class = "form-control", @placeholder = "ArticleId" })
+                </div>
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        }
+
+        <br />
+        @if (Model != null && Model.Item2 != null && Model.Item2.Any())
+        {
+            foreach (var item in Model.Item2)
+            {
+                <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.ArticleId">
+                    <dd>
+                        @Html.DisplayFor(model => item.Content)
+                    </dd>
+                </a>
+            }
+        }
+    </div>
 </div>
 
-<br/>
-@using (Html.BeginForm("Index", "Search", FormMethod.Get))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="row">
-        <div class="col-sm">
-            @Html.DropDownList("CategoryId", (SelectList) ViewBag.Categories, "Select Category", new {@class = "form-control"})
-        </div>
-        <div class="col-sm">
-            @Html.TextBox("Header", "", new {@class = "form-control", @placeholder = "Title"})
-        </div>
-        <div class="col-sm">
-            @Html.TextBox("Summery", "", new {@class = "form-control", @placeholder = "Summery"})
-        </div>
-        <div class="col-sm">
-            @Html.TextBox("DateCreated", DateTime.Now, new {@type = "date", @class = "form-control"})
-        </div>
-        <input type="submit" value="Search" class="btn btn-primary"/>
-    </div>
-}
-
-<br/>
-@if (Model != null && Model.Any())
-{
-    foreach (var item in Model)
-    {
-        <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.ArticleId">
-            <dd>
-                @Html.DisplayFor(model => item.Header)
-            </dd>
-        </a>
-    }
-}
