@@ -54,9 +54,17 @@ namespace NewsNow.Controllers
             return View(article);
         }
 
-        public async Task<IActionResult> MoveRelated(int? id)
+        public async Task<IActionResult> MoveRelated(int? prevId, int? newId)
         {
-            return RedirectToAction(nameof(Details), new {id = id});
+            if (prevId == null || newId == null)
+            {
+                return NotFound();
+            }
+            
+            string line = ((float) prevId).ToString("0.0") + ',' + ((float) newId).ToString("0.0");
+            System.IO.File.AppendAllText(_articlesTransitionDataPath, line + Environment.NewLine);
+
+            return RedirectToAction(nameof(Details), new {id = newId });
         }
 
         public async Task<IActionResult> Comments(int? id)
@@ -259,7 +267,7 @@ namespace NewsNow.Controllers
             var article = await _context.Articles.FindAsync(id);
             _context.Articles.Remove(article);
             await _context.SaveChangesAsync();
-            // TODO: Remove all the lines in the articles-transition-data.txt (_articlesTransitionDataPath) that contains this article id
+
             return RedirectToAction(nameof(Index));
         }
 
