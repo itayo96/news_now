@@ -21,7 +21,7 @@
             replace: function (match, converter, options) {
                 var url = match.slice(11, -1)
 
-                return "<div class='tweeter_tweet col-12' tweeter-url='https://twitter.com/Interior/status/463440424141459456'><script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script></div>"
+                return "<div class='tweeter_tweet col-12' tweeter-url='" + url + "'><script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script></div>"
             }
         }
     ]
