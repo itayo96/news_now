@@ -84,6 +84,22 @@ namespace NewsNow.Controllers
             return Json(comments);
         }
 
+        public async Task<IActionResult> Search(int? category, string header, string summery, DateTime? date)
+        {
+            var result = _context.Articles.AsQueryable();
+
+            if (category != null)
+                result = result.Where(x => x.CategoryId == category);
+            if (!String.IsNullOrWhiteSpace(header))
+                result = result.Where(x => x.Header.Contains(header));
+            if (!String.IsNullOrWhiteSpace(summery))
+                result = result.Where(x => x.Summery.Contains(summery));
+            if (date.HasValue)
+                result = result.Where(x => x.DateCreated.Value.Date == date.Value.Date);
+
+            return Json(result);
+        }
+
         public async Task<IActionResult> GetRelatedArticles(int? id)
         {
             if (id == null)
