@@ -43,7 +43,7 @@ namespace NewsNow.Controllers
             // TODO: Actually calculate the featured articles
             ViewData["Articles"] = await _context.Articles.ToListAsync();
             ViewData["Featured"] = await _context.Articles.Skip(1).Take(2).ToListAsync();
-            ViewData["Recent"] = await _context.Articles.OrderByDescending(x => x.DateCreated).Take(4).ToListAsync();
+            ViewData["Recent"] = await _context.Articles.OrderByDescending(x => x.DateCreated).Take(3).ToListAsync();
 
             return View();
         }
