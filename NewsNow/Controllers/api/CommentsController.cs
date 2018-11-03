@@ -90,6 +90,11 @@ namespace NewsNow.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (string.IsNullOrWhiteSpace(comment.Author) || string.IsNullOrWhiteSpace(comment.Content))
+            {
+                return BadRequest();
+            }
+
             comment.Sequence = await _context.Comments.Where(c => c.ArticleId == comment.ArticleId).CountAsync() + 1;
             comment.DatePosted = DateTime.Now;
 

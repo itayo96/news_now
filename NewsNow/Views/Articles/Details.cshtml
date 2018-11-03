@@ -121,7 +121,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="commentModalLabel">Are you sure?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">asdasd</span>
+                    <span aria-hidden="true">X</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -134,6 +134,26 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="errorCommentModal" tabindex="-1" role="dialog" aria-labelledby="errorCommentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorCommentModalLabel">Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Content or author can't be empty!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 @section Scripts
@@ -154,9 +174,9 @@
             </div>
             @if (SignInManager.IsSignedIn(User))
             {
-                <button class="btn btn-danger" onclick="delete_comment(${commentId})">X</button>
+                <button class="btn btn-danger" onclick="_delete_comment(${commentId})">X</button>
             }
-            
+
         </div>
     </script>
 
@@ -211,12 +231,22 @@
 
         var post_comment = function () {
             var data = $("#newCommentForm").serializeArray()
+
+            if (data[0].value == "" || data[1].value == "") {
+                $('#errorCommentModal').modal('show');
+            }
+
             new_comment(data[0].value, data[1].value, data[2].value).then(function () {
                 update_comments()
             });
 
-
             console.log(data)
+        }
+
+        var _delete_comment = function (id) {
+            delete_comment(id).then(function () {
+                update_comments();
+            })
         }
 
         var update_comments = function () {
