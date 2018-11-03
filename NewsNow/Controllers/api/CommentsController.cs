@@ -125,7 +125,7 @@ namespace NewsNow.Controllers
             return Ok(comment);
         }
 
-        [HttpGet]
+        [HttpGet("Search")]
         public async Task<IActionResult> Search(string Author, string Content)
         {
             var result = _context.Comments.AsQueryable();

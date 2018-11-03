@@ -64,9 +64,21 @@
         <br />
     </script>
 
-    <script id="searchedArticlesTmpl" type="text/x-jQuery-tmpl">
-        $("#commentTemplate").tmpl(comment)
-        <a href="/Articles/Details/" + ${ArticleId}>Go to article</a>
+    <script id="searchedCommentsTmpl" type="text/x-jQuery-tmpl">
+        <div class="media mb-1 border-bottom">
+            <div class="media-left">
+                <table class="comment-number-container mr-2">
+                    <tbody>
+                    <td class="align-middle text-center">#${sequence}</td>
+                    </tbody>
+                </table>
+            </div>
+            <div class="media-body">
+                <small>${author}</small>
+                <p>${content}</p>
+            </div>
+            <p><a href="/Articles/Details/${articleId}">Go to article </a> | <a href="#"> Report</a></p>
+        </div>
     </script>
 
     <script type="text/javascript">
