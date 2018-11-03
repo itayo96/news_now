@@ -42,3 +42,18 @@ var new_comment = function (author, content, article_id) {
         })
     })
 }
+
+var get_searched_articles = function (category, title, summery, date) {
+    return new Promise(resolve => {
+        $.ajax({
+            type: "GET",
+            url: "/Articles/Search/",
+            data: { category: category, header: title, summery: summery, date: date },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (articles) {
+                resolve(articles)
+            }
+        });
+    })
+}
