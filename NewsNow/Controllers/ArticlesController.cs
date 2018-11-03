@@ -54,6 +54,19 @@ namespace NewsNow.Controllers
             return View(article);
         }
 
+        public async Task<IActionResult> MoveRelated(int? prevId, int? newId)
+        {
+            if (prevId == null || newId == null)
+            {
+                return NotFound();
+            }
+            
+            string line = ((float) prevId).ToString("0.0") + ',' + ((float) newId).ToString("0.0");
+            System.IO.File.AppendAllText(_articlesTransitionDataPath, line + Environment.NewLine);
+
+            return RedirectToAction(nameof(Details), new {id = newId });
+        }
+
         public async Task<IActionResult> Comments(int? id)
         {
             if (id == null)
@@ -69,6 +82,22 @@ namespace NewsNow.Controllers
             }
 
             return Json(comments);
+        }
+
+        public async Task<IActionResult> Search(int? category, string header, string summery, DateTime? date)
+        {
+            var result = _context.Articles.AsQueryable();
+
+            if (category != null)
+                result = result.Where(x => x.CategoryId == category);
+            if (!String.IsNullOrWhiteSpace(header))
+                result = result.Where(x => x.Header.Contains(header));
+            if (!String.IsNullOrWhiteSpace(summery))
+                result = result.Where(x => x.Summery.Contains(summery));
+            if (date.HasValue)
+                result = result.Where(x => x.DateCreated.Value.Date == date.Value.Date);
+
+            return Json(result);
         }
 
         public async Task<IActionResult> GetRelatedArticles(int? id)
@@ -254,7 +283,7 @@ namespace NewsNow.Controllers
             var article = await _context.Articles.FindAsync(id);
             _context.Articles.Remove(article);
             await _context.SaveChangesAsync();
-            // TODO: Remove all the lines in the articles-transition-data.txt (_articlesTransitionDataPath) that contains this article id
+
             return RedirectToAction(nameof(Index));
         }
 

@@ -31,7 +31,7 @@ namespace ML
 
         public static int GetRelatedArticle(string dataPath, int ArticleId)
         {
-            // STEP 2: Create an evironment  and load your data
+            // STEP 2: Create an environment  and load your data
             var env = new LocalEnvironment();            
 
             var reader = new TextLoader(env,
