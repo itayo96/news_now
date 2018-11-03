@@ -11,7 +11,7 @@ namespace NewsNow.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentsController : ControllerBase
+    public class CommentsController : Controller
     {
         private readonly NewsNowContext _context;
 
@@ -123,6 +123,19 @@ namespace NewsNow.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(comment);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string Author, string Content)
+        {
+            var result = _context.Comments.AsQueryable();
+
+            if (!String.IsNullOrWhiteSpace(Author))
+                result = result.Where(x => x.Author.Contains(Author));
+            if (!String.IsNullOrWhiteSpace(Content))
+                result = result.Where(x => x.Content.Contains(Content));
+
+            return Json(result);
         }
 
         private bool CommentExists(int id)

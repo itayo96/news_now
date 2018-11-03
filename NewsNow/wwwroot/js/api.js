@@ -57,3 +57,18 @@ var get_searched_articles = function (category, title, summery, date) {
         });
     })
 }
+
+var get_searched_comments = function (author, content) {
+    return new Promise(resolve => {
+        $.ajax({
+            type: "GET",
+            url: "/api/Comments",
+            data: { Author: author, Content: content },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (comments) {
+                resolve(comments)
+            }
+        });
+    })
+}

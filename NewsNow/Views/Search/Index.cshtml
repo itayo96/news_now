@@ -7,10 +7,10 @@
 
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
-        <a id="#active-tab" class="nav-link" href="#articles" role="tab" data-toggle="tab">articles</a>
+        <a class="nav-link" href="#articles" role="tab" data-toggle="tab" onclick="update_searched_results('articles')">articles</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#comments" role="tab" data-toggle="tab">comments</a>
+        <a class="nav-link" href="#comments" role="tab" data-toggle="tab" onclick="update_searched_results('comments')">comments</a>
     </li>
 </ul>
 
@@ -26,7 +26,7 @@
                     {
                         <option value="@item.Value">@item.Text</option>
                     }
-                 </select>
+                </select>
             </div>
             <div class="col-sm">
                 <input id="title-input" type="text" class="form-control" placeholder="Title" />
@@ -37,71 +37,65 @@
             <div class="col-sm">
                 <input id="date-input" type="date" class="form-control" />
             </div>
-            <input type="button" value="Search" class="btn btn-primary" onclick="update_searched_articles();" />
+            <input type="button" value="Search" class="btn btn-primary" onclick="update_searched_results('articles');" />
         </div>
-
-        <br />
-        <div id="searched-articles"></div>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="comments">
-
         <br />
-        @using (Html.BeginForm("Index", "Search", FormMethod.Get))
-        {
-            @Html.AntiForgeryToken()
-            <div class="row">
-                <div class="col-sm">
-                    @Html.TextBox("Author", "", new { @class = "form-control", @placeholder = "Author" })
-                </div>
-                <div class="col-sm">
-                    @Html.TextBox("Content", "", new { @class = "form-control", @placeholder = "Content" })
-                </div>
-                <div class="col-sm">
-                    @Html.TextBox("ArticleId", "", new { @class = "form-control", @placeholder = "ArticleId" })
-                </div>
-                <input type="submit" value="Search" class="btn btn-primary" />
+        <div class="row">
+            <div class="col-sm">
+                <input id="author-input" type="text" class="form-control" placeholder="Author" />
             </div>
-        }
-
-        <br />
-        @if (Model != null && Model.Item2 != null && Model.Item2.Any())
-        {
-            foreach (var item in Model.Item2)
-            {
-                <a asp-controller="Articles" asp-action="Details" asp-route-id="@item.ArticleId">
-                    <dd>
-                        @Html.DisplayFor(model => item.Content)
-                    </dd>
-                </a>
-            }
-        }
+            <div class="col-sm">
+                <input id="content-input" type="text" class="form-control" placeholder="Content" />
+            </div>
+            <input type="button" value="Search" class="btn btn-primary" onclick="update_searched_results('comments');" />
+        </div>
     </div>
+
+    <br />
+    <div id="searched-results"></div>
 </div>
 
 @section Scripts
     {
     <script id="searchedArticlesTmpl" type="text/x-jQuery-tmpl">
-        <a href="#">${header}</a><br/>
+        <a href="#">${header}</a>
+        <br />
+    </script>
+
+    <script id="searchedArticlesTmpl" type="text/x-jQuery-tmpl">
+        $("#commentTemplate").tmpl(comment)
+        <a href="/Articles/Details/" + ${ArticleId}>Go to article</a>
     </script>
 
     <script type="text/javascript">
-
-        $(document).ready(function () {
-            update_searched_articles()
-        })
-
-        var update_searched_articles = function () {
-            get_searched_articles(
-                $('#cat-input').val(),
-                $('#title-input').val(),
-                $('#summery-input').val(),
-                $('#date-input').val()
-            ).then(function (articles) {
-                $("#searched-articles").html("");
-                articles.forEach(article => {
-                    $("#searchedArticlesTmpl").tmpl(article).appendTo("#searched-articles");
+        var update_searched_results = function (type) {
+            $("#searched-results").html("");
+            if (type == 'articles') {
+                get_searched_articles(
+                    $('#cat-input').val(),
+                    $('#title-input').val(),
+                    $('#summery-input').val(),
+                    $('#date-input').val()
+                ).then(function (articles) {
+                    $("#searched-results").html("");
+                    articles.forEach(article => {
+                        $("#searchedArticlesTmpl").tmpl(article).appendTo("#searched-results");
+                    })
                 })
-            })
+            }
+            else if (type == 'comments') {
+                get_searched_comments(
+                    $('#author-input').val(),
+                    $('#content-input').val()
+                ).then(function (comments) {
+                    $("#searched-results").html("");
+                    comments.forEach(comment => {
+                        $("#searchedCommentsTmpl").tmpl(comment).appendTo("#searched-results");
+                    })
+                })
+            }
         }
 
     </script>
