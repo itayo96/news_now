@@ -64,11 +64,6 @@ namespace NewsNow.Controllers
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToAction(nameof(Lockout));
-                }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -80,6 +75,7 @@ namespace NewsNow.Controllers
             return View(model);
         }
 
+        /*
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
@@ -94,7 +90,7 @@ namespace NewsNow.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-        /*
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

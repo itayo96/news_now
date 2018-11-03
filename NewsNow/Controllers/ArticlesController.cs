@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using NewsNow.Models;
 using ML;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NewsNow.Controllers
 {
@@ -28,13 +29,9 @@ namespace NewsNow.Controllers
             _articlesTransitionDataPath = System.IO.Path.Combine(_env.WebRootPath, "ml", "articles-transition-data.txt");
         }
 
+        [Authorize]
         // GET: Articles
         public async Task<IActionResult> Index()
-        {
-            return View(await _context.Articles.ToListAsync());
-        }
-
-        public async Task<IActionResult> Browse()
         {
             return View(await _context.Articles.ToListAsync());
         }
@@ -141,6 +138,7 @@ namespace NewsNow.Controllers
         }
 
         // GET: Articles/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "Name");
@@ -152,6 +150,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Header,Summery,Content,HomeImageUrl,CategoryId,Location,IsShowMap")] Article articleModel)
         {
             if (ModelState.IsValid)
@@ -164,6 +163,7 @@ namespace NewsNow.Controllers
         }
 
         // GET: Articles/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -187,6 +187,7 @@ namespace NewsNow.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("ArticleId,Header,Summery,Content,HomeImageUrl,CategoryId,Location,IsShowMap")] Article article)
         {
             if (id != article.ArticleId)
@@ -226,6 +227,7 @@ namespace NewsNow.Controllers
         }
 
         // GET: Articles/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -246,6 +248,7 @@ namespace NewsNow.Controllers
         // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var article = await _context.Articles.FindAsync(id);
