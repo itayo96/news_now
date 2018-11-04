@@ -1,8 +1,12 @@
-﻿@model NewsNow.Models.Category
+﻿@using Microsoft.AspNetCore.Identity
+@using NewsNow.Models
+
+@model NewsNow.Models.Category
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
-
 }
 
 <h2 class="pb-3 mb-4 font-italic border-bottom" style="color: @Model.HexColor !important;"> @Model.Name </h2>
@@ -21,6 +25,11 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.CategoryId">Edit</a> |
-    <a asp-action="Index">Categories List</a>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.CategoryId">Edit</a>
+        <a asp-action="Index">Categories List</a>
+    }
+
 </div>

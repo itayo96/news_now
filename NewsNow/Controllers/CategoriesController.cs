@@ -20,6 +20,7 @@ namespace NewsNow.Controllers
         }
 
         // GET: Categories
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categories.ToListAsync());

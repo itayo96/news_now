@@ -21,7 +21,3 @@ function LoadMap() {
         searchManager.geocode(requestOptions);
     });
 }
-
-map.setView({
-    zoom: 10, center: new Microsoft.Maps.Location(32.18658, 34.872192)
-});

@@ -32,7 +32,7 @@ var make_markdown_editor = function (e, initial_content) {
         element: e,
         insertTexts: {
             video: ["![VIDEO](", ")"],
-           video: ["![TWITTER](", ")"]
+            twitter: ["![TWITTER](", ")"]
         }
     });
     var str = decodeHtml(initial_content)

@@ -241,19 +241,7 @@
 
                 $("#ArticleContent").html(markdown_to_html("@Model.Content"));
 
-
                 load_markdown_tweeter()
-
-                $.ajax({
-                    type: "GET",
-                    url: "https://publish.twitter.com/oembed?url=https://twitter.com/Interior/status/463440424141459456",
-                    data: "https://twitter.com/Interior/status/463440424141459456",
-                    dataType: 'jsonp',
-                    crossDomain: true,
-                    success: function (data) {
-                        $("#twitter-handle").append(data['html']);
-                    }
-                })
             }
 
             $(function () {

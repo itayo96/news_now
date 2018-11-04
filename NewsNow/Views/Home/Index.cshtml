@@ -62,7 +62,9 @@
             @foreach (Article ar in ((List<Article>)ViewData["Recent"]))
             {
                 <div class="card">
-                    <img src="@ar.HomeImageUrl" class="img-fluid img-thumbnail" data-toggle="tooltip" data-placement="right" data-html="true" title="<h4>@ar.Header</h4><p>@ar.Summery</p>" />
+                    <a asp-controller="Articles" asp-action="Details" asp-route-id="@ar.ArticleId">
+                        <img src="@ar.HomeImageUrl" class="img-fluid img-thumbnail" data-toggle="tooltip" data-placement="right" data-html="true" title="<h4>@ar.Header</h4><p>@ar.Summery</p>" />
+                    </a>
                 </div>
             }
 
