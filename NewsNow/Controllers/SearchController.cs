@@ -20,7 +20,8 @@ namespace NewsNow.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(new Tuple<IEnumerable<Article>, IEnumerable<Comment>>(null, null));
+            ViewBag.Categories = _context.Categories.ToList<Category>();
+            return View();
         }
     }
 }

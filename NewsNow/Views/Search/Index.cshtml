@@ -10,7 +10,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-<ul class="nav nav-tabs" role="tablist">
+<ul id="search-tabs" class="nav nav-tabs" role="tablist">
     <li class="nav-item">
         <a class="nav-link" href="#articles" role="tab" data-toggle="tab" onclick="update_searched_results('articles')">articles</a>
     </li>
@@ -29,7 +29,7 @@
                     <option value="">All</option>
                     @foreach (var item in ViewBag.Categories)
                     {
-                        <option value="@item.Value">@item.Text</option>
+                        <option value="@item.CategoryId">@item.Name</option>
                     }
                 </select>
             </div>
@@ -94,6 +94,12 @@
     </script>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            // Show articles by default
+            $('#search-tabs a[href="#articles"]').tab('show');
+            update_searched_results('articles');
+        });
+
         var update_searched_results = function (type) {
             $("#searched-results").html("");
             if (type == 'articles') {
