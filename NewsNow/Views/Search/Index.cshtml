@@ -10,7 +10,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-<ul class="nav nav-tabs" role="tablist">
+<ul id="search-tabs" class="nav nav-tabs" role="tablist">
     <li class="nav-item">
         <a class="nav-link" href="#articles" role="tab" data-toggle="tab" onclick="update_searched_results('articles')">articles</a>
     </li>
@@ -26,10 +26,10 @@
         <div class="row">
             <div class="col-sm">
                 <select id="cat-input" name="CategoryId" class="form-control">
-                    <option style="display:none">Category</option>
+                    <option value="">All</option>
                     @foreach (var item in ViewBag.Categories)
                     {
-                        <option value="@item.Value">@item.Text</option>
+                        <option value="@item.CategoryId">@item.Name</option>
                     }
                 </select>
             </div>
@@ -40,7 +40,7 @@
                 <input id="summery-input" type="text" class="form-control" placeholder="Summery" />
             </div>
             <div class="col-sm">
-                <input id="date-input" type="date" class="form-control" />
+                <input id="articles-date-input" type="date" class="form-control" />
             </div>
             <input type="button" value="Search" class="btn btn-primary" onclick="update_searched_results('articles');" />
         </div>
@@ -53,6 +53,9 @@
             </div>
             <div class="col-sm">
                 <input id="content-input" type="text" class="form-control" placeholder="Content" />
+            </div>
+            <div class="col-sm">
+                <input id="comments-date-input" type="date" class="form-control" />
             </div>
             <input type="button" value="Search" class="btn btn-primary" onclick="update_searched_results('comments');" />
         </div>
@@ -94,6 +97,12 @@
     </script>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            // Show articles by default
+            $('#search-tabs a[href="#articles"]').tab('show');
+            update_searched_results('articles');
+        });
+
         var update_searched_results = function (type) {
             $("#searched-results").html("");
             if (type == 'articles') {
@@ -101,7 +110,7 @@
                     $('#cat-input').val(),
                     $('#title-input').val(),
                     $('#summery-input').val(),
-                    $('#date-input').val()
+                    $('#articles-date-input').val()
                 ).then(function (articles) {
                     $("#searched-results").html("");
                     articles.forEach(article => {
@@ -112,7 +121,8 @@
             else if (type == 'comments') {
                 get_searched_comments(
                     $('#author-input').val(),
-                    $('#content-input').val()
+                    $('#content-input').val(),
+                    $('#comments-date-input').val()
                 ).then(function (comments) {
                     $("#searched-results").html("");
                     comments.forEach(comment => {
