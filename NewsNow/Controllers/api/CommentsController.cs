@@ -126,7 +126,7 @@ namespace NewsNow.Controllers
         }
 
         [HttpGet("Search")]
-        public async Task<IActionResult> Search(string Author, string Content)
+        public async Task<IActionResult> Search(string Author, string Content, DateTime? DatePosted)
         {
             var result = _context.Comments.AsQueryable();
 
@@ -134,6 +134,8 @@ namespace NewsNow.Controllers
                 result = result.Where(x => x.Author.Contains(Author));
             if (!String.IsNullOrWhiteSpace(Content))
                 result = result.Where(x => x.Content.Contains(Content));
+            if (DatePosted.HasValue)
+                result = result.Where(x => x.DatePosted.Date == DatePosted.Value.Date);
 
             return Json(result);
         }

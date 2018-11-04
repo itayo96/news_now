@@ -58,12 +58,12 @@ var get_searched_articles = function (category, title, summery, date) {
     })
 }
 
-var get_searched_comments = function (author, content) {
+var get_searched_comments = function (author, content, date) {
     return new Promise(resolve => {
         $.ajax({
             type: "GET",
             url: "/api/Comments/Search/",
-            data: { Author: author, Content: content },
+            data: { Author: author, Content: content, DatePosted: date },
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (comments) {
